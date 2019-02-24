@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class BoardMaker {
 
 	/**
-	This method initializes a new board with each individual squares.
-	Each squares contain a specific name, type, color, price, and rent
-	@return board This is the list with each individual squares added.
+	* This method initializes a new board with each individual squares.
+	* Each squares contain a specific name, type, color, price, and rent
+	* @return board This is the list with each individual squares added.
 	*/
 	public static ArrayList<Square> DefaultBoard() {
 		ArrayList<Square> board = new ArrayList<Square>();
