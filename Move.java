@@ -21,6 +21,7 @@ public class Move{
 		String payCheck;
 		Random rand = new Random();
 		String check;
+		current = config.getBoard().get(player.getPosition());
 
 ///////////If the Player is in Jail///////////////////////////////////////////////////////////////////////////////////////////////
 		if (player.getJail() == true) {
