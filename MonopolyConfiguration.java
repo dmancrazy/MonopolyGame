@@ -1,30 +1,40 @@
 import java.util.ArrayList;
 
 	public class MonopolyConfiguration {
+		// initializes the board
 		private ArrayList<Square> board;
 
+	/**
+	 * This constructs a default board
+	 */
 	public MonopolyConfiguration() {
 		board = BoardMaker.DefaultBoard();
 		}
 
+	/**
+	 * This method returns the board
+	 * @return board The board
+	 */
 	public ArrayList<Square> getBoard() {
 		return board;
 	}
-
+	/**
+	 * This manually draws the board in a rectangular form onto the console
+	 */
 	public void printBoard() {
 
 //////////Printing out the first row////////////////////////////////////////////////////////////////////////
 		for (int i = 0; i < 178; i++) {			//Top line of dollarsigns
 			System.out.print("$");
 		}
-		System.out.println("");			
+		System.out.println("");
 
 
 		System.out.print("$");					//Titles of the squares
 		for (int i = 0; i < 11; i++) {
 			System.out.print("|" + board.get(i).toString() + "|");
 		}
-		System.out.println("$");				
+		System.out.println("$");
 
 
 		System.out.print("$");					//The player's positions
@@ -40,7 +50,7 @@ import java.util.ArrayList;
 			System.out.print("|" + temp + "|");
 		}
 		System.out.println("$");
-		
+
 
 		System.out.print("$");					//White space for cleanness
 		for (int j = 0; j < 11; j++) {
@@ -65,7 +75,7 @@ import java.util.ArrayList;
 			}
 
 
-			System.out.print("||" + board.get(10+i).toString() + "|");				//titles of right squares for 2 collumns	
+			System.out.print("||" + board.get(10+i).toString() + "|");				//titles of right squares for 2 collumns
 			System.out.println("$");
 
 
@@ -109,7 +119,7 @@ import java.util.ArrayList;
 
 
 			else {																	//dollar sign border around the bottom of collumn squares
-				System.out.print("$$$$$$$$$$$$$$$$$$");								
+				System.out.print("$$$$$$$$$$$$$$$$$$");
 					for (int j = 0; j < 142; j++) {
 						System.out.print(" ");
 					}
@@ -119,7 +129,7 @@ import java.util.ArrayList;
 ////////////////////////////Printing Middle Collumns////////////////////////////////////////////////////////////////////
 
 
-		
+
 ////////////////////////Printing out the bottom Row//////////////////////////////////////////////////////////////////////
 		System.out.print("$");														//printing the bottom row backwards like it should be
 		for (int f = 30; f>19; f--) {
@@ -158,11 +168,3 @@ import java.util.ArrayList;
 
 
 }
-
-
-
-
-		
-
-
-
