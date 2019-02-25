@@ -14,7 +14,7 @@ public class Move{
 
     /**
      * This method sets the current position as the first square on the configured board
-     * @param MonopolyConfiguration A setup for the monopoly board
+     * @param c A setup for the monopoly board
      */
     public Move(MonopolyConfiguration c) {
     	config = c;
