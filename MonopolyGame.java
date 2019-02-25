@@ -3,11 +3,18 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class MonopolyGame {
+
+	//initializes lists of human players, computer players, the board, and move
 	private static ArrayList<Player> humans;
 	private static ArrayList<Player> bots;
 	private static MonopolyConfiguration config;
 	private static Move move;
 
+/**
+ * Effectively the menu of the game
+ * The user is prompted for number of human players with optional bot player (max 1)
+ * For each players, a name is prompted
+ */
 	public static void setup() {
 		humans = new ArrayList<Player>();
 		bots = new ArrayList<Player>();
@@ -54,16 +61,22 @@ public class MonopolyGame {
 
 
 	}
+
+	/**
+	 * This method adds in the tokens for each players and gives a brief intro
+	 * During the game, this will output a player's name, balance, and position
+	 * A prompt for roll will also occur and a player will be moved accordingly
+	 */
 	public static void play() {
 		boolean quit = false;
 		Scanner sc = new Scanner(System.in);
 		String check;
-		System.out.println("\n\n\n\nWelcome to Monopoly!!!!!\nThere are " + 
+		System.out.println("\n\n\n\nWelcome to Monopoly!!!!!\nThere are " +
 			(humans.size() + bots.size()) + " players in this game." +
 			" Each player starts with $1500\nin their bank account and the goal of the game" +
 			" is to have every\nother player completely run out of money," +
 			" only then someone will win.\nEveryone will start on the" +
-			" Go! square.\nThe first player to move will be " + 
+			" Go! square.\nThe first player to move will be " +
 			humans.get(0).getName() +". Good luck and have fun!!\n");
 		for (int i = 0; i < humans.size(); i++) {
 			config.getBoard().get(0).getOccupants().add(humans.get(i).getOccupantValue());
@@ -80,7 +93,7 @@ public class MonopolyGame {
 
 		while (!quit) {
 			for (int i= 0; i < humans.size(); i++) {
-				System.out.println("\n" +humans.get(i).getName() + " you have $" + 
+				System.out.println("\n" +humans.get(i).getName() + " you have $" +
 					humans.get(i).getBalance() + " in your account and you are currently at " +
 					"the square [" + config.getBoard().get(humans.get(i).getPosition()).getName() + "]");
 					//System.out.println(" Please type roll to roll the 2 dice. ");
@@ -114,12 +127,14 @@ public class MonopolyGame {
 				//MonopolyConfiguration.printBoard();
 				move.roll(bots.get(0));
 			}
-				
+
 
 
 		}
 	}
-
+	/**
+	 * This method checks if a player's balance gets to $0 in which the player will lose
+	 */
 	public static void checkLosers() {
 		String loser;
 		for (int i= 0; i < humans.size(); i++) {
@@ -138,6 +153,7 @@ public class MonopolyGame {
 		}
 	}
 
+	// initializes the game
 	public static void main(String[] args) {
 		setup();
 		play();
