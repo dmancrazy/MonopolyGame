@@ -3,6 +3,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Move{
+
+  // initializes dice rolls, current position, and the board
     private int roll1;
     private int roll2;
     private int doubles=0;
@@ -10,12 +12,22 @@ public class Move{
     private MonopolyConfiguration config;
     // set proper parameters.
 
+    /**
+     * This method sets the current position as the first square on the configured board
+     * @param MonopolyConfiguration A setup for the monopoly board
+     */
     public Move(MonopolyConfiguration c) {
     	config = c;
     	current = config.getBoard().get(0);
     }
 
-
+    /**
+     * This method rolls the dice  for a player and moves them accordingly
+     * Checks if the player is in jail or not
+     * If the player is in jail, prompts for either payment or the chance of a double roll for a chance to be free
+     * If not, the player is simply moved normally and states their new current positions
+     * @param player A certain player
+     */
     public void roll(Player player){
 		Scanner kb = new Scanner(System.in);
 		String payCheck;
@@ -50,7 +62,7 @@ public class Move{
 
 
 /////////////////////If the Player is not in Jail/////////////////////////////////////////////////////////////////////////////////
-		else{ 
+		else{
 			if (!player.getName().equals("bot")) {
 				System.out.println("Please type roll to roll the 2 dice. ");
 				check = kb.next();
@@ -99,7 +111,7 @@ public class Move{
 				// we should set a house multiplier for each property too.
 				// make sure the payee variable under the square property references the legit player in the list
 				// a deposit and withdraw method would be nice
-				
+
 
 				//else{
 					//System.out.println("that property is owned by" + current.getOwner());
@@ -111,10 +123,10 @@ public class Move{
 		}
 	}
 }
-		
-				
-			    
+
+
+
 			    // public ifDoubles()
-				
+
 				// alot of this can probably be broken into separate functions, like a jailcheck and jail roll
-				// doubles can probably be checked in the play function everytime the loop runs. 
+				// doubles can probably be checked in the play function everytime the loop runs.
