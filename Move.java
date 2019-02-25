@@ -63,7 +63,7 @@ public class Move{
 
 /////////////////////If the Player is not in Jail/////////////////////////////////////////////////////////////////////////////////
 		else{
-			if (!player.getName().equals("bot")) {
+			if (!player.getName().equals("bot")) {  // WE WILL HAVE TO TELL THE USER TO ALWAYS NAME THE COMPUTER "BOT"
 				System.out.println("Please type roll to roll the 2 dice. ");
 				check = kb.next();
 				if (!check.toUpperCase().equals("ROLL")) {
