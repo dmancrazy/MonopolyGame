@@ -9,9 +9,8 @@ public class Square {
 	private Integer cost;
 	private Integer rent;
 	private ArrayList<String> occupants = new ArrayList<String>();
-	//private boolean owned = false;
-	//private HumanPlayer owner;
-	//private ComputerPlayer owner;
+	private boolean owned = false;
+	private Player owner;
 	//private int houseMultiplier = 1;
 
 	/**
@@ -105,19 +104,19 @@ public class Square {
 		return temp;
 	}
 
-	//public boolean getOwned() {
-	//	return owned;
-	//}
+	public boolean getOwned() {
+		return owned;
+	}
 
-	//public void setOwned(boolean b) {
-		//owned = b;
-	//}
+	public void setOwned(boolean b) {
+		owned = b;
+	}
 
-	//public HumanPlayer getOwner() {
-		//return owner;
-	//}
+	public Player getOwner() {
+		return owner;
+	}
 
-	//public void setOwner (HumanPlayer h) {
-		//owner = h;
-	//}
+	public void setOwner (Player h) {
+		owner = h;
+	}
 }

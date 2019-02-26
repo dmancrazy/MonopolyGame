@@ -10,6 +10,7 @@ public class Player{
     private boolean jail = false;
     private int jailCount = 0;
     private String occupantValue;
+    private boolean passedGo = false;
 
     /**
      * This method constructs a new player with a specific name and token that shows on the board
@@ -42,13 +43,19 @@ public class Player{
      * If no value is provided, the balance is set to 0
      * @param newB The value being set to a player's balance
      */
-    public void setBalance(int newB) {
-        if (newB >= 0) {
-            balance = newB;
+    public void changeBalance(int amount) {
+        if (amount > 0) {
+            balance += amount;
         }
-        else {
-            balance = 0;
+        else if (amount < 0) {
+            if ( balance < (-1*amount) ) {
+                balance = 0;
+            }
+            else {
+                balance += amount;
+            }
         }
+          
     }
     /**
      * This method checks if a player is in jail or not
@@ -101,6 +108,10 @@ public class Player{
         return propertiesOwned;
     }
 
+    public void addPropertiesOwned(Square s) {
+        propertiesOwned.add(s);
+    }
+
     /**
      * This method ensures the player goes in cycle around the board (30 -> 1)
      * @param newSpot The new current position of a player
@@ -109,7 +120,14 @@ public class Player{
         position = newSpot;
             if (position > 39) {
                 position -= 40;
+                passedGo = true;            
             }
+    }
+    public boolean getPassedGo() {
+        return passedGo;
+    }
+    public void setPassedGo(boolean b) {
+        passedGo = b;
     }
 
     /**
@@ -119,4 +137,5 @@ public class Player{
     public String getOccupantValue() {
         return occupantValue;
     }
+
 }

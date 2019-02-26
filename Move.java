@@ -28,7 +28,7 @@ public class Move{
      * If not, the player is simply moved normally and states their new current positions
      * @param player A certain player
      */
-    public void roll(Player player){
+    public void roll(Player player) {
 		Scanner kb = new Scanner(System.in);
 		String payCheck;
 		Random rand = new Random();
@@ -37,33 +37,43 @@ public class Move{
 
 ///////////If the Player is in Jail///////////////////////////////////////////////////////////////////////////////////////////////
 		if (player.getJail() == true) {
-			 System.out.println("you are in jail. You can roll doubles or pay 100$ to get out");
-			 System.out.println("Will you pay 100$? Y for yes, N for no");
-			 payCheck = kb.next();
-			 if (payCheck.toUpperCase().equals("Y")) {
-				 player.setBalance(player.getBalance()-100);
-				 player.setJail(false);
-				 System.out.println("you are free");
-			 }
-			 else{
-				 roll1 = rand.nextInt(6)+1;
-				 roll2 = rand.nextInt(6)+1;
-				 if (roll1 == roll2){
-					 System.out.println("Congratulations! You rolled 2" + roll1 + "'s");
-					 player.setJail(false);
-				 }
-				 else{
-					 System.out.println("Unfortunately you rolled a" + roll1 + "and a" + roll2);
-					 player.addJailCount(1);
-				 }
-			 }
+			if (player.getName().equals("bot")) {
+				if (player.getBalance() > 100 ) {
+					player.changeBalance(-100);
+					player.setJail(false);
+					System.out.println("Bot has freed themself from jail.");
+				}
+			}
+
+			else {
+				System.out.println("you are in jail. You can roll doubles or pay 100$ to get out");
+				System.out.println("Will you pay 100$? Y for yes, N for no");
+				payCheck = kb.next();
+				if (payCheck.toUpperCase().equals("Y")) {
+					player.changeBalance(-100);
+					player.setJail(false);
+					System.out.println("you are free and your new balance is $" + player.getBalance() +".");
+				}
+				else {
+					roll1 = rand.nextInt(6)+1;
+					roll2 = rand.nextInt(6)+1;
+					if (roll1 == roll2) {
+						System.out.println("Congratulations! You rolled 2" + roll1 + "'s.");
+						player.setJail(false);
+					}
+					else {
+						System.out.println("Unfortunately you rolled a " + roll1 + " and a " + roll2 + ", which is not a double.");
+						player.addJailCount(1);
+					}
+				}
+			}
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////If the Player is not in Jail/////////////////////////////////////////////////////////////////////////////////
-		else{
-			if (!player.getName().equals("bot")) {  // WE WILL HAVE TO TELL THE USER TO ALWAYS NAME THE COMPUTER "BOT"
+		else {
+			if (!player.getName().equals("bot")) { 
 				System.out.println("Please type roll to roll the 2 dice. ");
 				check = kb.next();
 				if (!check.toUpperCase().equals("ROLL")) {
@@ -73,38 +83,92 @@ public class Move{
 			roll1 = rand.nextInt(6) + 1;
 			roll2 = rand.nextInt(6) + 1;
 			System.out.println(player.getName() + " rolled a " + roll1 + " and a " + roll2 + ", so I move them " +
-			(roll1 + roll2) + " spaces.\n\n");
+			(roll1 + roll2) + " spaces.\n");
 			current.getOccupants().remove(player.getOccupantValue());
 			player.changePosition((roll1 + roll2)+ player.getPosition());
 			current = config.getBoard().get(player.getPosition());
 			current.getOccupants().add(player.getOccupantValue());
 			config.printBoard();
 			check = kb.next();
+			if (player.getPassedGo() == true) {
+				player.setPassedGo(false);
+				player.changeBalance(200);
+				System.out.println(player.getName() + " passed the [go] square, they will recieve $200 and their new balance is $" +
+					player.getBalance() +".");
+			}
 			if (player.getPosition() == 30) {
 				player.setJail(true);
 				current.getOccupants().remove(player.getOccupantValue());
 				player.changePosition(10);
 				current = config.getBoard().get(player.getPosition());
 				current.getOccupants().add(player.getOccupantValue());
-				System.out.println("Go To Jail ! You are now moved to jail, you must roll double or pay bail to get out.");
-				config.printBoard();
+				System.out.println("Go To Jail ! You are now moved to jail. Next turn you will start in in jail " +
+					" you must roll double or pay bail to get out.");
 				check = kb.next();
 			}
-			// make sure this is right
-			else{
+			
+			else {
 				System.out.println(player.getName()+ "'s current position is [" + current.getName() + "]");
-				check = kb.next();
-				//if(current.getOwned() == false){
-					//if (player.getBalance() < current.getCost()){
-						//System.out.println("you do not have enough money to purchase this property");
-					//}
-					//else{
-						//System.out.println("would you like to buy" + current.getName());
-						//System.out.println("press y for yes or n for n");
-						//check = kb.next();
-						//if (check.equals("y")){
-						//	player.setBalance(player.getBalance()-current.getCost());
-						//
+				if (current.getType().equals("property") || current.getType().equals("rail")) {
+					if(current.getOwned() == false) {
+						if (player.getBalance() <= current.getCost()) {
+							System.out.println(player.getName() +  " does not have enough money to purchase this property, " + 
+								"if they do purchase it, they lose the game.");
+							check = kb.next();
+						}
+						if (player.getName().equals("bot")) {
+							if (player.getBalance() > current.getCost()) {
+								buyProperty(player, current);
+								check = kb.next();
+							}
+						}
+						else {
+							System.out.println("would " + player.getName() + " like to buy " + current.getName() + " for $" + 
+								current.getCost() + ". They have $" + player.getBalance() + " in their account.");
+							System.out.println("press y for yes");
+							check = kb.next();
+							if (check.toUpperCase().equals("Y")){
+								buyProperty(player, current);
+								check = kb.next();
+							}
+						}
+					}
+					else if (current.getOwner() != player) {
+						System.out.print(player.getName() + " has landed on the " + current.getName() + 
+							" property and must pay $" + current.getRent() + " to the property owner, which is " +
+							current.getOwner().getName() + ".\n" + player.getName() + " has $" +
+							player.getBalance() + " in their account." );
+						check = kb.next();
+						payRent(player, current);
+						check = kb.next();
+					}
+					else if (current.getOwner() == player) {
+						System.out.print(player.getName() + " has landed on their own property, which is [" + 
+							current.getName() + "] so nothing happens.");
+						check=kb.next();
+					}
+				}
+			}
+		}
+	}
+
+	public void buyProperty(Player p, Square property) {
+		p.changeBalance(-1*current.getCost());
+		property.setOwned(true);
+		property.setOwner(p);
+		p.addPropertiesOwned(property);
+		System.out.println(p.getName() + " has purchased " + property.getName() + " for $" + property.getCost() + 
+		". Their new balance is $" + p.getBalance());
+	}
+
+	public void payRent(Player p, Square property) {
+		p.changeBalance(-1*property.getRent());
+		System.out.println("\n" + p.getName() + " spent $" + property.getRent() + " to spend the night at " +
+			property.getName() + " and their new balance is $" + p.getBalance() + ".\n");
+		property.getOwner().changeBalance(property.getRent());
+		System.out.println(property.getOwner().getName() + " recieved $" + property.getRent() + " as rent from " +
+			p.getName() +". Their new balance is $" + property.getOwner().getBalance() + ".");
+	}		
 					//}
 				//}
 				//gotta set property owners and get property owners, and houses count too
@@ -119,9 +183,7 @@ public class Move{
 					//current.getOwner().setBalance(current.getOwner().getBalance()+(current.getRent()));
 					//// a printLN to say how much was payed
 				//}
-			}
-		}
-	}
+			
 }
 
 

@@ -9,6 +9,7 @@ public class MonopolyGame {
 	private static ArrayList<Player> bots;
 	private static MonopolyConfiguration config;
 	private static Move move;
+	private static boolean quit = false;
 
 /**
  * Effectively the menu of the game
@@ -68,7 +69,6 @@ public class MonopolyGame {
 	 * A prompt for roll will also occur and a player will be moved accordingly
 	 */
 	public static void play() {
-		boolean quit = false;
 		Scanner sc = new Scanner(System.in);
 		String check;
 		System.out.println("\n\n\n\nWelcome to Monopoly!!!!!\nThere are " +
@@ -78,6 +78,8 @@ public class MonopolyGame {
 			" only then someone will win.\nEveryone will start on the" +
 			" Go! square.\nThe first player to move will be " +
 			humans.get(0).getName() +". Good luck and have fun!!\n");
+
+
 		for (int i = 0; i < humans.size(); i++) {
 			config.getBoard().get(0).getOccupants().add(humans.get(i).getOccupantValue());
 		}
@@ -87,45 +89,30 @@ public class MonopolyGame {
 		config.printBoard();
 		System.out.println("Please type anything to continue.");
 		check = sc.next();
-		//int firstRoll;
-		//int secondRoll;
-		//String rollConfirm;
+
 
 		while (!quit) {
 			for (int i= 0; i < humans.size(); i++) {
 				System.out.println("\n" +humans.get(i).getName() + " you have $" +
 					humans.get(i).getBalance() + " in your account and you are currently at " +
 					"the square [" + config.getBoard().get(humans.get(i).getPosition()).getName() + "]");
-					//System.out.println(" Please type roll to roll the 2 dice. ");
-				//rollConfirm = sc.nextLine();
-				//if (!rollConfirm.equals("roll")) {
-					//System.out.println("\nYou didn't type in roll correctly, but I rolled for you anyways c:");
-				//}
-				//firstRoll = rand.nextInt(6) + 1;
-				//secondRoll = rand.nextInt(6) + 1;
-				//System.out.println("You rolled a " + firstRoll + " and a " + secondRoll + ", so I move you " +
-				//	(firstRoll + secondRoll) + " spaces.\n\n");
-				//humans.get(i).move(firstRoll + secondRoll);
-				//MonopolyConfiguration.printBoard();
 				move.roll(humans.get(i));
+				checkLosers();
+				if (quit) {
+					break;
+				}
 			}
+
 			for (int i= 0; i < bots.size(); i++) {
+				if (quit) {
+					break;
+				}
 				System.out.print("\nIt is now the bots turn, they will now roll the dice." +
 					" The bot has $" + bots.get(i).getBalance() + " and is at position [" +
 					config.getBoard().get(bots.get(i).getPosition()).getName() + "]");
 				check = sc.next();
-				//System.out.print(" Please type roll so the bot can roll their dice. ");
-				//rollConfirm = sc.nextLine();
-				//if (!rollConfirm.equals("roll")) {
-				//	System.out.println("\nYou didn't type in roll correctly, but I rolled for the bot anyways");
-				//}
-				//firstRoll = rand.nextInt(6) + 1;
-				//secondRoll = rand.nextInt(6) + 1;
-				//System.out.println("The bot rolled a " + firstRoll + " and a " + secondRoll + ", so I move them " +
-				//	(firstRoll + secondRoll) + " spaces.");
-				//bots.get(0).move(firstRoll + secondRoll);
-				//MonopolyConfiguration.printBoard();
 				move.roll(bots.get(0));
+				checkLosers();
 			}
 
 
@@ -136,20 +123,40 @@ public class MonopolyGame {
 	 * This method checks if a player's balance gets to $0 in which the player will lose
 	 */
 	public static void checkLosers() {
-		String loser;
+		Player loser;
 		for (int i= 0; i < humans.size(); i++) {
 			if (humans.get(i).getBalance() == 0) {
-				loser = humans.get(i).getName();
-				System.out.println("Player " + loser + " has run out of money, he is now eliminated from the game.");
+				loser = humans.get(i);
+				System.out.println("Player " + loser.getName() + " has run out of money and is now eliminated from the game.");
 				humans.remove(loser);
+				for (int j = 0; j < loser.getPropertiesOwned().size(); j++) {
+					loser.getPropertiesOwned().get(j).setOwned(false);
+					System.out.println(loser.getPropertiesOwned().get(j).getName() + " is now up for grabs.");
+				}
+				System.out.println("\nThe number of humans remaining is " + humans.size() + ".");
+				System.out.println("The number of bots remaining is " + bots.size() + ".");
 			}
 		}
 		for (int i= 0; i < bots.size(); i++) {
-			loser = bots.get(i).getName();
-			System.out.println("Player " + loser + " has run out of money, he is now eliminated from the game.");
+			if (bots.get(i).getBalance() == 0) {
+				loser = bots.get(i);
+				System.out.println("Player " + loser.getName() + " has run out of money and is now eliminated from the game.");
+				bots.remove(loser);
+				for (int j = 0; j < loser.getPropertiesOwned().size(); j++) {
+					loser.getPropertiesOwned().get(j).setOwned(false);
+					System.out.println(loser.getPropertiesOwned().get(j).getName() + " is now up for grabs.");
+				}
+				System.out.println("\nThe number of humans remaining is " + humans.size() + ".");
+				System.out.println("The number of bots remaining is " + bots.size() + ".");
+			}
 		}
 		if ((humans.size() == 1) && (bots.size() == 0)) {
-			System.out.print("Player " + humans.get(0) + " wins the Game!!!");
+			System.out.print("\n\nPlayer " + humans.get(0).getName() + " wins the Game!!!\n\n");
+			quit = true;
+		}
+		if ((bots.size() == 1) && (humans.size() == 0)) {
+			System.out.print("The bot wins the Game!!!");
+			quit = true;
 		}
 	}
 
