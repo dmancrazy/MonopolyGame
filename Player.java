@@ -55,7 +55,7 @@ public class Player{
                 balance += amount;
             }
         }
-          
+
     }
     /**
      * This method checks if a player is in jail or not
@@ -108,6 +108,10 @@ public class Player{
         return propertiesOwned;
     }
 
+    /**
+     * This method adds a property to a players list of owned properties
+     * @param s The square the property is on
+     */
     public void addPropertiesOwned(Square s) {
         propertiesOwned.add(s);
     }
@@ -120,12 +124,22 @@ public class Player{
         position = newSpot;
             if (position > 39) {
                 position -= 40;
-                passedGo = true;            
+                passedGo = true;
             }
     }
+
+    /**
+     * This method checks if a player can simply pass through jail or not
+     * @return passedGo True or False
+     */
     public boolean getPassedGo() {
         return passedGo;
     }
+
+    /**
+     * This method determines if a player can simply pass through jail or not
+     * @param b True or False
+     */
     public void setPassedGo(boolean b) {
         passedGo = b;
     }
