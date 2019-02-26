@@ -1,7 +1,7 @@
 # Monopoly Game
 
 The project can be found in this repository.
-https://github.com/AmkaTsendjargal/CPSC-219/edit/Donald's-Branch/README.md
+https://github.com/AmkaTsendjargal/MonopolyGame/edit/Donald's-Branch/README.md
 
 # Running
 Download and run the following commands in the directory containing all of the files.
