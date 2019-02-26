@@ -130,7 +130,7 @@ public class Player{
 
     /**
      * This method checks if a player can simply pass through jail or not
-     * @return passedGo True or False
+     * @return passedGo True if the player can or False if not
      */
     public boolean getPassedGo() {
         return passedGo;
@@ -138,7 +138,7 @@ public class Player{
 
     /**
      * This method determines if a player can simply pass through jail or not
-     * @param b True or False
+     * @param b True if the player can or False if not
      */
     public void setPassedGo(boolean b) {
         passedGo = b;
