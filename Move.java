@@ -73,7 +73,7 @@ public class Move{
 
 /////////////////////If the Player is not in Jail/////////////////////////////////////////////////////////////////////////////////
 		else {
-			if (!player.getName().equals("bot")) { 
+			if (!player.getName().equals("bot")) {
 				System.out.println("Please type roll to roll the 2 dice. ");
 				check = kb.next();
 				if (!check.toUpperCase().equals("ROLL")) {
@@ -106,13 +106,13 @@ public class Move{
 					" you must roll double or pay bail to get out.");
 				check = kb.next();
 			}
-			
+
 			else {
 				System.out.println(player.getName()+ "'s current position is [" + current.getName() + "]");
 				if (current.getType().equals("property") || current.getType().equals("rail")) {
 					if(current.getOwned() == false) {
 						if (player.getBalance() <= current.getCost()) {
-							System.out.println(player.getName() +  " does not have enough money to purchase this property, " + 
+							System.out.println(player.getName() +  " does not have enough money to purchase this property, " +
 								"if they do purchase it, they lose the game.");
 							check = kb.next();
 						}
@@ -123,7 +123,7 @@ public class Move{
 							}
 						}
 						else {
-							System.out.println("would " + player.getName() + " like to buy " + current.getName() + " for $" + 
+							System.out.println("would " + player.getName() + " like to buy " + current.getName() + " for $" +
 								current.getCost() + ". They have $" + player.getBalance() + " in their account.");
 							System.out.println("press y for yes");
 							check = kb.next();
@@ -134,7 +134,7 @@ public class Move{
 						}
 					}
 					else if (current.getOwner() != player) {
-						System.out.print(player.getName() + " has landed on the " + current.getName() + 
+						System.out.print(player.getName() + " has landed on the " + current.getName() +
 							" property and must pay $" + current.getRent() + " to the property owner, which is " +
 							current.getOwner().getName() + ".\n" + player.getName() + " has $" +
 							player.getBalance() + " in their account." );
@@ -143,7 +143,7 @@ public class Move{
 						check = kb.next();
 					}
 					else if (current.getOwner() == player) {
-						System.out.print(player.getName() + " has landed on their own property, which is [" + 
+						System.out.print(player.getName() + " has landed on their own property, which is [" +
 							current.getName() + "] so nothing happens.");
 						check=kb.next();
 					}
@@ -152,15 +152,25 @@ public class Move{
 		}
 	}
 
+  /**
+   * This method gives ownership of a property to a player and tells the user their new balance
+   * @param p A player
+   * @param property A property being bought by a player
+   */
 	public void buyProperty(Player p, Square property) {
 		p.changeBalance(-1*current.getCost());
 		property.setOwned(true);
 		property.setOwner(p);
 		p.addPropertiesOwned(property);
-		System.out.println(p.getName() + " has purchased " + property.getName() + " for $" + property.getCost() + 
+		System.out.println(p.getName() + " has purchased " + property.getName() + " for $" + property.getCost() +
 		". Their new balance is $" + p.getBalance());
 	}
 
+  /**
+   * When a player stays on another player's property, this method transfers rent from the player to that another player
+   * @param p A player paying the rent or the payer
+   * @param property Property owned by the payee (p1)
+   */
 	public void payRent(Player p, Square property) {
 		p.changeBalance(-1*property.getRent());
 		System.out.println("\n" + p.getName() + " spent $" + property.getRent() + " to spend the night at " +
@@ -168,7 +178,7 @@ public class Move{
 		property.getOwner().changeBalance(property.getRent());
 		System.out.println(property.getOwner().getName() + " recieved $" + property.getRent() + " as rent from " +
 			p.getName() +". Their new balance is $" + property.getOwner().getBalance() + ".");
-	}		
+	}
 					//}
 				//}
 				//gotta set property owners and get property owners, and houses count too
@@ -183,7 +193,7 @@ public class Move{
 					//current.getOwner().setBalance(current.getOwner().getBalance()+(current.getRent()));
 					//// a printLN to say how much was payed
 				//}
-			
+
 }
 
 
