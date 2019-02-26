@@ -104,18 +104,34 @@ public class Square {
 		return temp;
 	}
 
+	/**
+	 * This method checks if a square/property is owned by some player
+	 * @return owned True if owned or False if not
+	 */
 	public boolean getOwned() {
 		return owned;
 	}
 
+	/**
+	 * This method sets a property to a owned status
+	 * @param b True if owned or False if not
+	 */
 	public void setOwned(boolean b) {
 		owned = b;
 	}
 
+	/**
+	 * This method allows you to get the name of the owner of the property/square
+	 * @return owner The player that owns the square
+	 */
 	public Player getOwner() {
 		return owner;
 	}
 
+	/**
+	 * This method sets a player as the owner of square/property
+	 * @param h The player buying the square 
+	 */
 	public void setOwner (Player h) {
 		owner = h;
 	}
