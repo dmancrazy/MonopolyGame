@@ -129,16 +129,16 @@ public class Player{
     }
 
     /**
-     * This method checks if a player can simply pass through jail or not
-     * @return passedGo True if the player can or False if not
+     * This method checks if a player has passed through the first "Go" square
+     * @return passedGo True if the player has or False if not
      */
     public boolean getPassedGo() {
         return passedGo;
     }
 
     /**
-     * This method determines if a player can simply pass through jail or not
-     * @param b True if the player can or False if not
+     * This method determines if a player has just passed through the first "Go" square
+     * @param b True if the player has or False if not
      */
     public void setPassedGo(boolean b) {
         passedGo = b;
