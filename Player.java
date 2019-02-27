@@ -1,5 +1,12 @@
 import java.util.*;
 
+/**
+ * This class outlines the specifications of each players playing the game.
+ * These specifications affect the interactions a player may have with each squares
+ * @author Group 6
+ * @version 1.0
+ * @since 2019-02-25
+ */
 public class Player{
 
     // initializes player name, balance, position/square, number of jail visits, and token name
