@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
 
+/**
+ * This class effectively functions as the main menu of the game and where the game will run from.
+ * @author Group 6
+ * @verions 1.0
+ * @since 2019-02-25
+ */
 public class MonopolyGame {
 
 	//initializes lists of human players, computer players, the board, and move
@@ -12,7 +18,7 @@ public class MonopolyGame {
 	private static boolean quit = false;
 
 /**
- * Effectively the menu of the game
+ * Prompts the user for basic specifications of the game with a brief intro
  * The user is prompted for number of human players with optional bot player (max 1)
  * For each players, a name is prompted
  */
