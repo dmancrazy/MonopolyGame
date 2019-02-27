@@ -1,5 +1,11 @@
 import java.util.ArrayList;
-
+/**
+ * The Square class generates a square with unique name, type, color, cost, rent, and owner.
+ * Through this class, information about each square can be obtained and a square can be set to a player/new owner.
+ * @author Group 6
+ * @version 1.0
+ * @since 2019-02-25
+ */
 public class Square {
 
 	// initializes a name, type, color, cost, rent, and a list occupants of each square on the board
