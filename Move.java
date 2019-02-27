@@ -2,6 +2,12 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * This class outlines the interaction a player will have with each square and the game in general.
+ * @author Group 6
+ * @version 1.0
+ * @since 2019-02-25
+ */
 public class Move{
 
   // initializes dice rolls, current position, and the board
