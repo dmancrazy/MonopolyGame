@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 
-
+/**
+ * This class generates a monopoly board with a list of 39 unique squares
+ * @author Group 6
+ * @version 1.0
+ * @since 2019-02-25
+ */
 public class BoardMaker {
 
 	/**
