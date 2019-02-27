@@ -1,5 +1,11 @@
 import java.util.ArrayList;
 
+/**
+ * This class sets up the exact dimensions of the entire board and placement for each unique square/property
+ * @author Group 6
+ * @version 1.0
+ * @since 2019-02-25
+ */
 	public class MonopolyConfiguration {
 		// initializes the board
 		private ArrayList<Square> board;
