@@ -11,18 +11,23 @@ import java.util.Random;
 public class MonopolyGame {
 
 	//initializes lists of human players, computer players, the board, and move
-	private static ArrayList<Player> humans;
-	private static ArrayList<Player> bots;
-	private static MonopolyConfiguration config;
-	private static Move move;
-	private static boolean quit = false;
+	private ArrayList<Player> humans;
+	private ArrayList<Player> bots;
+	MonopolyConfiguration config;
+	private Move move;
+	private boolean quit = false;
 
+
+
+		public MonopolyGame() {
+
+		}
 /**
  * Prompts the user for basic specifications of the game with a brief intro
  * The user is prompted for number of human players with optional bot player (max 1)
  * For each players, a name is prompted
  */
-	public static void setup() {
+	public void setup() {
 		humans = new ArrayList<Player>();
 		bots = new ArrayList<Player>();
 		config = new MonopolyConfiguration();
@@ -74,7 +79,7 @@ public class MonopolyGame {
 	 * During the game, this will output a player's name, balance, and position
 	 * A prompt for roll will also occur and a player will be moved accordingly
 	 */
-	public static void play() {
+	public void play() {
 		Scanner sc = new Scanner(System.in);
 		String check;
 		System.out.println("\n\n\n\nWelcome to Monopoly!!!!!\nThere are " +
@@ -128,7 +133,7 @@ public class MonopolyGame {
 	/**
 	 * This method checks if a player's balance gets to $0 in which the player will lose
 	 */
-	public static void checkLosers() {
+	public void checkLosers() {
 		Player loser;
 		for (int i= 0; i < humans.size(); i++) {
 			if (humans.get(i).getBalance() == 0) {
@@ -166,9 +171,8 @@ public class MonopolyGame {
 		}
 	}
 
-	// initializes the game
-	public static void main(String[] args) {
-		setup();
-		play();
-	}
+	
+	
+		
+
 }
