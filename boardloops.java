@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.prism.paint.Color;
+
 import javafx.application.Application;
 
 import javafx.scene.Scene;
@@ -11,16 +13,23 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 
 public class boardloops extends Application{
 	
@@ -73,16 +82,29 @@ public class boardloops extends Application{
 	Label b39 = new Label("BoardWalk");
 	Label menuPlayers = new Label("Player Names : ");
 	Label menuTitle = new Label("Welcome To Monopoly!");
+	Label gameTitle = new Label("MONOPOLY");
+	Label numPrompt = new Label("Select number of players: ");
+	Label playerName = new Label("Player 1 name: ");
+	Label playerBalance = new Label("Player 1 balance: ");
 	
 	Button Buy = new Button("Buy");
 	Button Roll = new Button("Roll");
+	Button Ok = new Button("Done");
 	VBox menu = new VBox();
 	HBox actions = new HBox();
+	VBox pCard1 = new VBox();
+	VBox pCard2 = new VBox();
+	VBox pCard3 = new VBox();
+	VBox pCard4 = new VBox();
+	VBox botCard = new VBox();
 	
 	List<Label> eachNames = Arrays.asList(go,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23
 			,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37,b38,b39);
 	
-	
+	public Integer getChoice(ChoiceBox<Integer> numChoice) {
+		int numberOfPlayers = numChoice.getValue();
+		return numberOfPlayers;
+	}
 	
 	
 	
@@ -95,31 +117,47 @@ public void start(Stage PrimaryStage) throws Exception{
 		Buy.setPrefSize(100, 50);
 		Roll.setPrefSize(100, 50);
 		actions.getChildren().addAll(Buy, Roll);
+
 		
 		for (int i = 0 ; i < 40 ; i++) {
 			VBox square = new VBox();
 			square.setPrefSize(100, 100);	
+			square.setStyle("-fx-border-color: black");
 			ArrayList<String> playerNames = new ArrayList<String>();
 			squares.add(square);
 		}
-		
-		/*for (int i = 0 ; i < 40 ; i++) {
-			for (int j = 0 ; j < 40 ; j++) {
-				squares.get(i).getChildren().add(names.get(j));
-				
-			}
+		HBox numPlayers = new HBox();
+			ChoiceBox<Integer> numChoice = new ChoiceBox<>();
+			numChoice.getItems().addAll(0, 1, 2, 3, 4);
+			numChoice.setValue(4);
+			numPlayers.getChildren().addAll(numPrompt, numChoice, Ok);
+			Ok.setOnAction(e -> getChoice(numChoice));
 			
+		if (getChoice(numChoice) == 1) {
+			pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+			botCard.getChildren().addAll(new Label("Bot name: "), new Label("Bot balance: "));
+	
 		}
-		int i = 0;
-		while (i <= names.size()) {
-			for (VBox square : squares) {
-				square.getChildren().add(names.get(i));
-				i++;
-			}
-		}*/
+		else if (getChoice(numChoice) == 2) {
+			pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+			pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
+
+		}
+		else if (getChoice(numChoice) == 3) {
+				pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+				pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
+				pCard3.getChildren().addAll(new Label("Player 3 name: "), new Label("Player 3 balance: "));
+		
+		}
+		else if (getChoice(numChoice) == 4) {
+			pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+			pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
+			pCard3.getChildren().addAll(new Label("Player 3 name: "), new Label("Player 3 balance: "));
+			pCard4.getChildren().addAll(new Label("Player 4 name: "), new Label("Player 4 balance: "));
+
+		}
 		
 		squares.get(0).getChildren().add(names.get(0));
-		squares.get(0).getChildren().add(new Label("Cost: "));
 		squares.get(1).getChildren().add(names.get(1));
 		squares.get(2).getChildren().add(names.get(2));
 		squares.get(3).getChildren().add(names.get(3));
@@ -162,8 +200,7 @@ public void start(Stage PrimaryStage) throws Exception{
 		
 		GridPane board = new GridPane();
 		board.setPadding(new Insets(10, 10, 10, 10));
-		board.setHgap(1);
-		board.setVgap(1);
+
 		GridPane.setConstraints(squares.get(0), 10, 10);
 		GridPane.setConstraints(squares.get(1), 9, 10);
 		GridPane.setConstraints(squares.get(2), 8, 10);
@@ -204,13 +241,19 @@ public void start(Stage PrimaryStage) throws Exception{
 		GridPane.setConstraints(squares.get(37), 10, 7);
 		GridPane.setConstraints(squares.get(38), 10, 8);
 		GridPane.setConstraints(squares.get(39), 10, 9);
-		GridPane.setConstraints(menu, 12, 0);
-		GridPane.setConstraints(actions, 12, 10);
+		GridPane.setConstraints(menu, 13, 0);
+		GridPane.setConstraints(actions, 13, 10);
+		GridPane.setConstraints(gameTitle, 5, 5);
+		GridPane.setConstraints(numPlayers, 13, 1);
+		GridPane.setConstraints(pCard1, 1, 1);
+		GridPane.setConstraints(pCard2, 9, 1);
+		GridPane.setConstraints(pCard3, 9, 9);
+		GridPane.setConstraints(pCard4, 1, 9);
 		
 		board.getChildren().addAll(squares.get(0), squares.get(1), squares.get(2), squares.get(3), squares.get(4), squares.get(5), squares.get(6), squares.get(7), squares.get(8), squares.get(9),
 				squares.get(10), squares.get(11), squares.get(12), squares.get(13), squares.get(14), squares.get(15), squares.get(16), squares.get(17), squares.get(18), squares.get(19), squares.get(20), squares.get(21), squares.get(22), squares.get(23),
 				squares.get(24), squares.get(25), squares.get(26), squares.get(27), squares.get(28), squares.get(29), squares.get(30), squares.get(31), squares.get(32), squares.get(33), squares.get(34), squares.get(35), squares.get(36), squares.get(37),
-				squares.get(38), squares.get(39), menu, actions);
+				squares.get(38), squares.get(39), menu, actions, gameTitle, numPlayers, pCard1, pCard2, pCard3, pCard4, botCard);
 		
 		Scene scene = new Scene(board, 1300, 700);
 		monopoly.setScene(scene);
