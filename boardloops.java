@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -23,6 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
 import javafx.event.ActionEvent;
@@ -35,11 +37,12 @@ public class boardloops extends Application{
 	
 	Stage monopoly;
 	
-	static ArrayList<Label> names = new ArrayList<>();
+// Initialize array lists to allow iteration through each item 
+	ArrayList<Label> names = new ArrayList<>();
 	ArrayList<VBox> squares = new ArrayList<VBox>();
+	ArrayList<HBox> playerNameInputs = new ArrayList<HBox>();
 
-	
-	
+// Initialize all names of each squares
 	Label go = new Label("GO");
 	Label b1 = new Label("Med Ave");
 	Label b2 = new Label("Comm Chest 1");
@@ -80,10 +83,11 @@ public class boardloops extends Application{
 	Label b37 = new Label("Park Place");
 	Label b38 = new Label("Luxury Tax");
 	Label b39 = new Label("BoardWalk");
+	
+// Initialize the "menu" of the game
 	Label menuPlayers = new Label("Player Names : ");
 	Label menuTitle = new Label("Welcome To Monopoly!");
 	Label gameTitle = new Label("MONOPOLY");
-	Label numPrompt = new Label("Select number of players: ");
 	Label playerName = new Label("Player 1 name: ");
 	Label playerBalance = new Label("Player 1 balance: ");
 	
@@ -92,33 +96,34 @@ public class boardloops extends Application{
 	Button Ok = new Button("Done");
 	VBox menu = new VBox();
 	HBox actions = new HBox();
+	
+// Initialize the player cards that show up inside the board
 	VBox pCard1 = new VBox();
 	VBox pCard2 = new VBox();
 	VBox pCard3 = new VBox();
 	VBox pCard4 = new VBox();
 	VBox botCard = new VBox();
-	
+	VBox nameInputs = new VBox();
+
+// Add all square names into its list for later iteration	
 	List<Label> eachNames = Arrays.asList(go,b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18,b19,b20,b21,b22,b23
-			,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37,b38,b39);
-	
-	public Integer getChoice(ChoiceBox<Integer> numChoice) {
-		int numberOfPlayers = numChoice.getValue();
-		return numberOfPlayers;
-	}
+			,b24,b25,b26,b27,b28,b29,b30,b31,b32,b33,b34,b35,b36,b37,b38,b39);	
 	
 	
-	
+// start the window that the board will be on
 public void start(Stage PrimaryStage) throws Exception{
 		monopoly = PrimaryStage;
 		PrimaryStage.setFullScreen(true);
 		monopoly.setTitle("Monopoly");
+	// adding the "menu" items
 		names.addAll(eachNames);
 		menu.getChildren().addAll( menuTitle, menuPlayers);
 		Buy.setPrefSize(100, 50);
 		Roll.setPrefSize(100, 50);
 		actions.getChildren().addAll(Buy, Roll);
-
 		
+
+	// creates 40 squares and adds it to the list for later iteration	
 		for (int i = 0 ; i < 40 ; i++) {
 			VBox square = new VBox();
 			square.setPrefSize(100, 100);	
@@ -126,37 +131,69 @@ public void start(Stage PrimaryStage) throws Exception{
 			ArrayList<String> playerNames = new ArrayList<String>();
 			squares.add(square);
 		}
+		
+	// This is the prompt for number of players
 		HBox numPlayers = new HBox();
-			ChoiceBox<Integer> numChoice = new ChoiceBox<>();
-			numChoice.getItems().addAll(0, 1, 2, 3, 4);
-			numChoice.setValue(4);
-			numPlayers.getChildren().addAll(numPrompt, numChoice, Ok);
-			Ok.setOnAction(e -> getChoice(numChoice));
-			
-		if (getChoice(numChoice) == 1) {
-			pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
-			botCard.getChildren().addAll(new Label("Bot name: "), new Label("Bot balance: "));
+			ComboBox<Integer> numChoice = new ComboBox<>();
+			numChoice.getItems().addAll(1, 2, 3, 4);
+			numChoice.setPromptText("Pick the number of players:");
+			numPlayers.getChildren().addAll(numChoice, Ok);
+			Ok.setOnAction(e -> numChoice.getValue());
 	
-		}
-		else if (getChoice(numChoice) == 2) {
-			pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
-			pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
+	// game title rotated in the center
+		gameTitle.setRotate(-45);
 
-		}
-		else if (getChoice(numChoice) == 3) {
-				pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
-				pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
-				pCard3.getChildren().addAll(new Label("Player 3 name: "), new Label("Player 3 balance: "));
-		
-		}
-		else if (getChoice(numChoice) == 4) {
-			pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
-			pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
-			pCard3.getChildren().addAll(new Label("Player 3 name: "), new Label("Player 3 balance: "));
-			pCard4.getChildren().addAll(new Label("Player 4 name: "), new Label("Player 4 balance: "));
+	// The action that occurs after number of players is picked		
+		Ok.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent pickplayers) {
+			
+			// this creates player cards according to the number of players picked above
+				if (numChoice.getValue() == 1) {
+					pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+					botCard.getChildren().addAll(new Label("Bot name: "), new Label("Bot balance: "));
+			
+				}
+				else if (numChoice.getValue() == 2) {
+					pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+					pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
 
-		}
-		
+				}
+				else if (numChoice.getValue() == 3) {
+						pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+						pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
+						pCard3.getChildren().addAll(new Label("Player 3 name: "), new Label("Player 3 balance: "));
+				
+				}
+				else if (numChoice.getValue() == 4) {
+					pCard1.getChildren().addAll(new Label("Player 1 name: "), new Label("Player 1 balance: "));
+					pCard2.getChildren().addAll(new Label("Player 2 name: "), new Label("Player 2 balance: "));
+					pCard3.getChildren().addAll(new Label("Player 3 name: "), new Label("Player 3 balance: "));
+					pCard4.getChildren().addAll(new Label("Player 4 name: "), new Label("Player 4 balance: "));
+
+				}
+				
+			// according to the # of players picked, it will prompt their names
+				for (int i = 0 ; i < numChoice.getValue() ; i++) {
+					HBox input = new HBox();
+						Label playerName = new Label("Player " + (numChoice.getValue()-(numChoice.getValue()-(i+1))) + " name :");
+						TextField player = new TextField();
+						input.getChildren().addAll(playerName, player);
+					playerNameInputs.add(input);
+				}
+				for (HBox prompts : playerNameInputs) {
+					nameInputs.getChildren().add(prompts);
+					nameInputs.setSpacing(2);
+				}
+			// the "Done" button is nullified to stop player name prompts to duplicate	
+				Ok.setOnAction(null);
+				
+				
+			}
+		});
+
+
+	// adds all names to their corresponding squares (indexed from their lists)
 		squares.get(0).getChildren().add(names.get(0));
 		squares.get(1).getChildren().add(names.get(1));
 		squares.get(2).getChildren().add(names.get(2));
@@ -197,10 +234,12 @@ public void start(Stage PrimaryStage) throws Exception{
 		squares.get(37).getChildren().add(names.get(37));
 		squares.get(38).getChildren().add(names.get(38));
 		squares.get(39).getChildren().add(names.get(39));
-		
+	
+	// setup of the board
 		GridPane board = new GridPane();
 		board.setPadding(new Insets(10, 10, 10, 10));
 
+	// configure the positions each squares will go into (x,y = 0, 0 = top left corner)
 		GridPane.setConstraints(squares.get(0), 10, 10);
 		GridPane.setConstraints(squares.get(1), 9, 10);
 		GridPane.setConstraints(squares.get(2), 8, 10);
@@ -241,20 +280,26 @@ public void start(Stage PrimaryStage) throws Exception{
 		GridPane.setConstraints(squares.get(37), 10, 7);
 		GridPane.setConstraints(squares.get(38), 10, 8);
 		GridPane.setConstraints(squares.get(39), 10, 9);
+		
+	// positioning of the "menu items" and player cards/ name inputs
 		GridPane.setConstraints(menu, 13, 0);
 		GridPane.setConstraints(actions, 13, 10);
 		GridPane.setConstraints(gameTitle, 5, 5);
 		GridPane.setConstraints(numPlayers, 13, 1);
 		GridPane.setConstraints(pCard1, 1, 1);
 		GridPane.setConstraints(pCard2, 9, 1);
+		GridPane.setConstraints(botCard, 9, 1);
 		GridPane.setConstraints(pCard3, 9, 9);
 		GridPane.setConstraints(pCard4, 1, 9);
-		
+		GridPane.setConstraints(nameInputs, 13, 2);
+	
+	// adds all the named squares onto the board/gridpane
 		board.getChildren().addAll(squares.get(0), squares.get(1), squares.get(2), squares.get(3), squares.get(4), squares.get(5), squares.get(6), squares.get(7), squares.get(8), squares.get(9),
 				squares.get(10), squares.get(11), squares.get(12), squares.get(13), squares.get(14), squares.get(15), squares.get(16), squares.get(17), squares.get(18), squares.get(19), squares.get(20), squares.get(21), squares.get(22), squares.get(23),
 				squares.get(24), squares.get(25), squares.get(26), squares.get(27), squares.get(28), squares.get(29), squares.get(30), squares.get(31), squares.get(32), squares.get(33), squares.get(34), squares.get(35), squares.get(36), squares.get(37),
-				squares.get(38), squares.get(39), menu, actions, gameTitle, numPlayers, pCard1, pCard2, pCard3, pCard4, botCard);
-		
+				squares.get(38), squares.get(39), menu, actions, gameTitle, numPlayers, pCard1, pCard2, pCard3, pCard4, botCard, nameInputs);
+	
+	// run the window with the board
 		Scene scene = new Scene(board, 1300, 700);
 		monopoly.setScene(scene);
 		
