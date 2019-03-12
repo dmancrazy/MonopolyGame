@@ -185,7 +185,7 @@ public void start(Stage PrimaryStage) throws Exception{
 					nameInputs.getChildren().add(prompts);
 					nameInputs.setSpacing(2);
 				}
-			// the "Done" button is nullified to stop player name prompts to duplicate	
+			 // the "Done" button is nullified to stop player name prompts to duplicate for multiple button clicks	
 				Ok.setOnAction(null);
 				
 				
