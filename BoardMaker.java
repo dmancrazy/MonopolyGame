@@ -13,7 +13,7 @@ public class BoardMaker {
 	* Each squares contain a specific name, type, color, price, and rent
 	* @return board This is the list with each individual squares added.
 	*/
-	public static ArrayList<Square> DefaultBoard() {
+	public static ArrayList<Square> defaultBoard() {
 		ArrayList<Square> board = new ArrayList<Square>();
 		board.add(new Square("GO", "Go", "" , 0 , 0));
 		board.add(new Square("Med Ave" , "property" , "brown" , 60 , 30));

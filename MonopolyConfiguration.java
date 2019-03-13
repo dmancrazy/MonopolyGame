@@ -14,7 +14,7 @@ import java.util.ArrayList;
 	 * This constructs a default board
 	 */
 	public MonopolyConfiguration() {
-		board = BoardMaker.DefaultBoard();
+		board = BoardMaker.defaultBoard();
 		}
 
 	/**
