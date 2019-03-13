@@ -75,7 +75,7 @@ chanceCards.add(6, LostDog);
         else if (action.equals("prison")) {
             // Update user's position; they go to prison
         } 
-        else if (action.equals("")) {
+       // else if (action.equals("")) {
             // and so on...
         }
     }
