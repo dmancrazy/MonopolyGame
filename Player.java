@@ -16,7 +16,7 @@ public class Player{
     private ArrayList<Square> propertiesOwned = new ArrayList<Square>();
     private boolean jail = false;
     private int jailCount = 0;
-    private String occupantValue;
+    private String icon;
     private boolean passedGo = false;
 
     /**
@@ -26,7 +26,7 @@ public class Player{
      */
     public Player(String aName, String ov){
     this.name = aName;
-    this.occupantValue = ov;
+    this.icon = ov;
     }
 
     /**
@@ -153,10 +153,10 @@ public class Player{
 
     /**
      * This method allows you to get the token of a player on the board
-     * @return occupantValue A token of a player
+     * @return icon A token of a player
      */
-    public String getOccupantValue() {
-        return occupantValue;
+    public String getIcon() {
+        return icon;
     }
 
 }
