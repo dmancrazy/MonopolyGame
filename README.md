@@ -4,11 +4,12 @@ The project can be found in this repository.
 https://github.com/AmkaTsendjargal/MonopolyGame
 
 # Running
-Download and run the following commands in the directory containing the 6 .java files.
+Download all .java files within the repository and put them all into the same directory. After changing directories to the one containing the files using the command prompt; run the following commands in the directory containing the .java files.
 ```
 javac *.java
-java MonopolyGame
+java MonopolyApp
 ```
+Then choose the number of players in the first scene and press ok. Then assign names to all of the players and press the start game button.
 
 # Citations and References
 
