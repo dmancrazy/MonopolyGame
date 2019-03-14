@@ -18,3 +18,15 @@ Verwaal, N. CPSC 219 - Introduction to Computer Science for Multidisciplinary St
 Hasbro, Inc. Monopoly.
 
 ObjectAid UML Explorer: https://www.objectaid.com/home
+
+Oracle Docs: https://docs.oracle.com/javase/8/javafx/api/javafx/scene/layout/Background.html
+
+StackOverFlow: https://stackoverflow.com/questions/14370554/how-to-programmatically-set-the-color-or-texture-of-a-tab-label-in-javafx
+               https://stackoverflow.com/questions/37689441/javafx-text-control-setting-the-fill-color
+               https://stackoverflow.com/questions/53644508/setting-background-color-in-javafx-not-working
+             
+Monopoly Rents: http://www.falstad.com/monopoly.html
+
+YouTube: https://youtu.be/7LxWQIDOzyE
+
+
