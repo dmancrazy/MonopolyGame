@@ -166,7 +166,7 @@ public void start(Stage PrimaryStage) throws Exception{
 			// according to the # of players picked, it will prompt their names
 				for (int i = 0 ; i < numChoice.getValue() ; i++) {
 				//	for (int j = 0 ; j < numChoice.getValue() ; j++) {
-						Player player = new Player("jolly green ranger" + (i), "" + (i));
+						Player player = new Player("jolly green ranger" + (i), "" + (i+1));
 						players.add(player);
 						if (numChoice.getValue() == 1) {
 							Player bot = new Player("Bot", "B");
@@ -218,15 +218,6 @@ public void start(Stage PrimaryStage) throws Exception{
 			// the "Done" button is nullified to stop player name prompts to duplicate	
 				//Ok.setOnAction(null);
 				
-				/*for (int i = 0 ; i < numChoice.getValue() ; i++) {
-					Player player = new Player("" + (i+1), "" + (i+1));
-					players.add(player);
-					if (numChoice.getValue() == 1) {
-						Player bot = new Player("Bot", "B");
-						players.add(bot);
-					}
-				}
-				
 				for (Player player : players) {
 					board.get(0).getOccupants().add(player.getIcon());
 				}
@@ -239,22 +230,11 @@ public void start(Stage PrimaryStage) throws Exception{
 							" and their balance is $" + players.get(i).getBalance());
 					
 				}
-			*/
-				
+
+			
 			}
 		});
-		for (Player player : players) {
-			board.get(0).getOccupants().add(player.getIcon());
-		}
-		for (int j = 0 ; j < 40 ; j++) {
-			Label occupants = new Label(board.get(j).listedOccupants());
-			squares.get(j).getChildren().add(occupants);
-		}
-		for (int j= 0 ; j < players.size() ; j++) {
-			playerTurnLabel.setText("It is player " + players.get(players.size() - players.size()).getName() + "'s turn. \nThey are at " +  board.get(players.get(j).getPosition()).getName() + 
-					" and their balance is $" + players.get(j).getBalance());
-			
-		}
+
 		
 
 	
