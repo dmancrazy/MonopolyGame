@@ -21,6 +21,7 @@ public class Square {
 	private int mortgageValue;
 	//private int houseMultiplier = 1;
 	private int houseAmount;
+	private int id;
 
 	/**
 	 * This constructs a new square with some name, type, color, cost, and rent
@@ -30,7 +31,7 @@ public class Square {
 	 * @param aCost The cost of a square/property
 	 * @param r The rent of a square/property
 	 */
-	public Square(String n, String t, String c, int aCost , int r, int hp, int mv) {
+	public Square(String n, String t, String c, int aCost , int r, int hp, int mv,int anID) {
 		name = n;
 		type = t;
 		color = c;
@@ -38,6 +39,7 @@ public class Square {
 		rent = r;
 		housePrice= hp;
 		mortgageValue=mv;
+		id=anID;
 	}
 
 	/**
@@ -169,6 +171,9 @@ public class Square {
 	}
 	public void setHouseAmount(int aHouseAmount){
 		houseAmount=aHouseAmount;
+	}
+	public int getId(){
+		return id;
 	}
 	
 }

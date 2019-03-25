@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
 public class MonopolyApp extends Application {
+	// Initialize all necessary nodes that will be added to the menu window
 	protected VBox root = new VBox();
 	protected TextField p1Name = new TextField("Player 1's Name");
 	protected TextField p2Name = new TextField("Player 2's Name");
@@ -30,21 +31,28 @@ public class MonopolyApp extends Application {
 	Stage window;
 	Scene scene1, scene2;
 
+	/**
+	 * This method makes the window and adds all initialized nodes
+	 * @param primaryStage The "stage" everything will occur and will be added to
+	 */
 	@Override
 	public void start(Stage primaryStage) {
+		// Set title and size of the initialized window
 		window = primaryStage;
 		scene1 = new Scene(root, 600, 400); 
 		primaryStage.setTitle("Monopoly Setup");
 		primaryStage.setScene(scene1);
 		primaryStage.show();
 
+		// Welcome message
 		root.setAlignment(Pos.TOP_CENTER);
 		Label welcomeMessage = new Label("Welcome to Monopoly " +
 			"by Group 6, please select the\nnumber of players that " +
 			"you would like to play with.");
 		welcomeMessage.setPadding(new Insets (45,0,25,0));
 		root.getChildren().add(welcomeMessage);
-
+		
+		// The prompts for and takes the number of players
 		numChoice = new ComboBox<Integer>();
 		numChoice.getItems().addAll(1, 2, 3, 4);
 		numChoice.setPromptText("Pick the number of players:");
@@ -54,11 +62,14 @@ public class MonopolyApp extends Application {
 		numPlayers.setAlignment(Pos.TOP_CENTER);
 		numPlayers.getChildren().addAll(numChoice, ok);
 		root.getChildren().add(numPlayers);
-
+		
+		// The "ok" button is given an action depending on the number of player picked
 		ok.setOnAction(new nameEntries());
 					
 	}
-
+	/*
+	 * This class 
+	 */
 	public class nameEntries implements EventHandler<ActionEvent> {
 
 		@Override

@@ -41,8 +41,11 @@ public class BoardGameGui {
 	private Dice dice= new Dice();
 	private int roll1;
 	private int roll2;
+	private int actionCount=1;
 	//private Turn playerTurn = new Turn();
 	private int playersTurn=0;
+	private int buyCount=-1;
+	private int messageCount=0;
 // Initialize array lists to allow iteration through each item 
 	private ArrayList<Label> propertyNames = new ArrayList<>();
 	private ArrayList<VBox> squares = new ArrayList<VBox>();
@@ -50,7 +53,16 @@ public class BoardGameGui {
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private static boolean quit = false;
 	private MonopolyConfiguration config= new MonopolyConfiguration();
-	private Movement move = new Movement(config);
+	private MovementGui move = new MovementGui(config);
+	private Button Buy = new Button();
+	private Button Roll = new Button();
+	private int coordinateVariable=0;
+	private BankerGui banker= new BankerGui();
+	boolean yesNo=false;
+	private Label balanceLabel1;
+	private Label balanceLabel2;
+	private Label balanceLabel3;
+	private Label balanceLabel4;
 // Initialize all names of each squares
 	public BoardGameGui(ArrayList<Player> nPlayers) {
 		this.board = BoardMaker.DefaultBoard();
@@ -62,8 +74,7 @@ public class BoardGameGui {
 	Label menuTitle = new Label("Welcome To Monopoly!");
 	Label gameTitle = new Label("MONOPOLY");
 	
-	Button Buy = new Button("Buy");
-	Button Roll = new Button("Roll");
+	
 	HBox actions = new HBox();
 	
 // Initialize the player cards that show up inside the board
@@ -83,9 +94,12 @@ public Scene getScene2() {
 		
 		Buy.setPrefSize(90, 50);
 		Roll.setPrefSize(90, 50);
+		Buy.setText("Buy");
+		Roll.setText("Roll");
 		actions.getChildren().addAll(Buy, Roll);
 		turn.getChildren().add(playerTurnLabel);
 		Roll.setOnAction(new rollHandle());
+		Buy.setOnAction(new buyHandle());
 		for (Square property : board) {
 			propertyNames.add(new Label(property.getName()));
 		}
@@ -216,25 +230,36 @@ public Scene getScene2() {
 		public void placePlayers() {
 			// this creates player cards according to the number of players picked above
 			if (players.size() == 1) {
-				pCard1.getChildren().addAll(new Label(players.get(0).getName()), new Label("balance: " + players.get(0).getBalance()));
+				balanceLabel1 =new Label("balance: 1500" );
+				pCard1.getChildren().addAll(new Label(players.get(0).getName()), balanceLabel1);
 
 			}
 			else if (players.size() == 2) {
-				pCard1.getChildren().addAll(new Label(players.get(0).getName()), new Label("balance: " + players.get(0).getBalance()));
-				pCard2.getChildren().addAll(new Label(players.get(1).getName()), new Label("balance: " + players.get(1).getBalance()));
+				balanceLabel1 =new Label("balance: 1500");
+				balanceLabel2 = new Label("balance: 1500");
+				
+				pCard1.getChildren().addAll(new Label(players.get(0).getName()), balanceLabel1);
+				pCard2.getChildren().addAll(new Label(players.get(1).getName()), balanceLabel2);
 
 			}
 			else if (players.size() == 3) {
-				pCard1.getChildren().addAll(new Label(players.get(0).getName()), new Label("balance: " + players.get(0).getBalance()));
-				pCard2.getChildren().addAll(new Label(players.get(1).getName()), new Label("balance: " + players.get(1).getBalance()));
-				pCard3.getChildren().addAll(new Label(players.get(2).getName()), new Label("balance: " + players.get(2).getBalance()));
+				balanceLabel1 =new Label("balance: 1500");
+				balanceLabel2 = new Label("balance: 1500");
+				balanceLabel3 = new Label("balance: 1500");
+				pCard1.getChildren().addAll(new Label(players.get(0).getName()), balanceLabel1);
+				pCard2.getChildren().addAll(new Label(players.get(1).getName()), balanceLabel2);
+				pCard3.getChildren().addAll(new Label(players.get(2).getName()), balanceLabel3);
 
 			}
 			else if (players.size() == 4) {
-				pCard1.getChildren().addAll(new Label(players.get(0).getName()), new Label("balance: " + players.get(0).getBalance()));
-				pCard2.getChildren().addAll(new Label(players.get(1).getName()), new Label("balance: " + players.get(1).getBalance()));
-				pCard3.getChildren().addAll(new Label(players.get(2).getName()), new Label("balance: " + players.get(2).getBalance()));
-				pCard4.getChildren().addAll(new Label(players.get(3).getName()), new Label("balance: " + players.get(3).getBalance()));
+				balanceLabel1 =new Label("balance: 1500");
+				balanceLabel2 = new Label("balance: 1500");
+				balanceLabel3 =new Label("balance: 1500");
+				balanceLabel4 = new Label("balance: 1500");
+				pCard1.getChildren().addAll(new Label(players.get(0).getName()), balanceLabel1);
+				pCard2.getChildren().addAll(new Label(players.get(1).getName()), balanceLabel2);
+				pCard3.getChildren().addAll(new Label(players.get(2).getName()), balanceLabel3);
+				pCard4.getChildren().addAll(new Label(players.get(3).getName()), balanceLabel4);
 			}
 
 			// the "Done" button is nullified to stop player name prompts to duplicate	
@@ -249,26 +274,177 @@ public Scene getScene2() {
 			}
 			for (int i = 0 ; i < players.size() ; i++) {
 				playerTurnLabel.setText("It is player " + players.get(players.size() - players.size()).getName() + "'s turn. \nThey are at " +  board.get(players.get(i).getPosition()).getName() + 
-						" and their balance is $" + players.get(i).getBalance());
+						" and their balance is $" + players.get(i).getBalance()+"Click roll to roll the dice");
 					
 			}
+		}
 
+		public void	turnUpdate(){
+			playersTurn+=1;
+			if (playersTurn>players.size()-1){
+				playersTurn=0;
+			}
+			Buy.setText("Buy");
+			Roll.setText("Roll");
+			
+			//update this to be action count -1 so you can set an press ok to set shit up button
+			//set this shit to update players balances everytime;
+			//for(int i = 0 ; i < players.size() ; i++){
+			refresh();
+			
+			if(players.size()==1){
+				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
+			}
+			else if(players.size()==2){
+				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
+				balanceLabel2.setText("balance: "+ players.get(1).getBalance());
+			}
+			else if (players.size()==3){
+				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
+				balanceLabel2.setText("balance: "+ players.get(1).getBalance());
+				balanceLabel3.setText("balance: "+ players.get(2).getBalance());
+			}
+			else if(players.size()==4){
+				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
+				balanceLabel2.setText("balance: "+ players.get(1).getBalance());
+				balanceLabel3.setText("balance: "+ players.get(2).getBalance());
+				balanceLabel4.setText("balance: "+ players.get(3).getBalance());
+			}
+		
 			
 		}
+		public void refresh(){
+			actionCount=0;
+			buyCount=-1;
+			messageCount=0;
+			coordinateVariable=0;
+			yesNo=false;
+			
+		}
+		
+		
 	public class rollHandle implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent event) {
-	
-			roll1=dice.roll();
-			roll2=dice.roll();
-			turnMessage.setText("You rolled a " + roll1 + " and a " + roll2 + " which equals " +(roll1+roll2));
+			if (actionCount==0){
+				actionCount+=1;
+				turnMessage.setText("Click roll to roll the dice");
+				Buy.setText("Buy");
+				Roll.setText("Roll");
+			}
+			else if (actionCount==1){
+				
+				actionCount++;
+				Roll.setText("Ok");
+				turnMessage.setText(move.move1(players.get(playersTurn))+"Click ok to continue");
 			
-			playersTurn++;
-			if(playersTurn==players.size()){
-				playersTurn=0;
+			
+			}
+			else if (actionCount==2){
+				messageCount=move.move2(players.get(playersTurn));
+				if (messageCount==4){
+					turnMessage.setText("Player passed go and is visiting jail Click Ok to continue");
+				}
+				
+				else if (messageCount==3){
+					turnMessage.setText("Player passed go  Click Ok to continue");
+				}
+				else if (messageCount==2){
+					turnMessage.setText("Player goes to jail  Click Ok to continue");
+				}
+				else if (messageCount==3){
+					turnMessage.setText("Player just visiting jail  Click Ok to continue ");
+				}
+				else{
+					turnMessage.setText("Nice to not be in jail. Press ok to continue");
+				}
+				messageCount=0;
+				actionCount++;
+				
+			}
+			else if (actionCount==3){
+				coordinateVariable=move.move3(players.get(playersTurn));
+				if (coordinateVariable==1){
+					turnMessage.setText(players.get(playersTurn).getName()+" has landed on their own property");
+					actionCount=0;
+					Roll.setText("Roll");
+					turnUpdate();
+					coordinateVariable=0;
+				}
+				else if (coordinateVariable==2){
+
+					turnMessage.setText(players.get(playersTurn).getName()+" has landed at a rivals property. Press Ok to continue");
+					//set thus shit to update a pay count
+					actionCount++;
+				//	buyCount=move.coordinate2(players.get(playersTurn));
+					coordinateVariable=0;
+				}
+				else if (coordinateVariable==3){
+					buyCount=move.coordinate2(players.get(playersTurn));
+					turnMessage.setText(players.get(playersTurn).getName()+"  has landed at " + board.get(buyCount-1).getName()+ ". Buy for " + board.get(buyCount-1).getCost() +" ?");
+		
+					actionCount++;
+					coordinateVariable=0;
+					Buy.setText("No");
+					Roll.setText("Yes");
+					yesNo=true;
+					
+				}
+				else{
+					turnMessage.setText("landed on specialtyProperty");
+					actionCount=0;
+					coordinateVariable=0;
+					turnUpdate();
+				}
+		
+			}
+			else if( (buyCount>-1) && (yesNo==true)){
+				if(buyCount==0){
+					turnMessage.setText(players.get(playersTurn).getName()+" does not have enough money to purchase this property, " +
+				"if they do purchase it, they lose the game.");
+				buyCount=-1;
+				turnUpdate();
+				}
+				else if(buyCount>100){
+					turnMessage.setText("the bot has purchased " + board.get(buyCount-100).getName() + " for " + board.get(buyCount-100).getCost());
+					buyCount=-1;
+					turnUpdate();
+				}
+				else if(buyCount>0){
+				
+				/*	Buy.setText("Yes");
+					Roll.setText("No");
+					yesNo=true;*/
+					banker.buyProperty(players.get(playersTurn),board.get(buyCount-1));
+				turnMessage.setText(players.get(playersTurn).getName() + " has purchased " +board.get(buyCount-1).getName()+ " for " + board.get(buyCount-1).getCost());
+				buyCount=-1;
+				turnUpdate();
+				actionCount=0;
+				}
+			}
+				
+			}
+		
+			
+			
+		}
+	
+	
+	public class buyHandle implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent event) {
+			if(yesNo==true){
+				turnMessage.setText("ait dont then");
+				turnUpdate();
+			
+				buyCount=-1;
+				actionCount=0;
+				}
 			}
 		}
 	
-	}
+		
+		
+	//created a resetter to move all values back to deault
 
 }

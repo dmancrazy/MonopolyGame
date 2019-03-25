@@ -14,7 +14,7 @@ public class MonopolyGame {
 	private ArrayList<Player> humans = new ArrayList<Player>();
 	private ArrayList<Player> bots = new ArrayList<Player>();
 	private MonopolyConfiguration config = new MonopolyConfiguration();
-	private Movement movement = new Movement(config);
+	private MovementGui movement = new MovementGui(config);
 	private boolean quit = false;
 	private Scanner sc = new Scanner(System.in);
 	private String check;
@@ -81,7 +81,7 @@ public class MonopolyGame {
 		for (int i = 0; i <bots.size(); i++) {
 			config.getBoard().get(0).getOccupants().add(bots.get(i).getIcon());
 		}
-		config.printBoard();
+		//config.printBoard();
 		System.out.println("Please type anything to continue.");
 		check = sc.next();
 
@@ -91,7 +91,7 @@ public class MonopolyGame {
 				System.out.println("\n" +humans.get(i).getName() + " you have $" +
 					humans.get(i).getBalance() + " in your account and you are currently at " +
 					"the square [" + config.getBoard().get(humans.get(i).getPosition()).getName() + "]");
-				movement.move(humans.get(i));
+				movement.move1(humans.get(i));
 				checkLosers();
 				if (quit) {
 					break;
@@ -106,7 +106,7 @@ public class MonopolyGame {
 					" The bot has $" + bots.get(i).getBalance() + " and is at position [" +
 					config.getBoard().get(bots.get(i).getPosition()).getName() + "]");
 				check = sc.next();
-				movement.move(bots.get(0));
+				movement.move1(bots.get(0));
 				checkLosers();
 			}
 
