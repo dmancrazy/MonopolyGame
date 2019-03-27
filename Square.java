@@ -157,7 +157,9 @@ public class Square {
 	public Player getOwner() {
 		return owner;
 	}
-
+	public String getOwnerName(){
+		return owner.getName();
+	}
 	/**
 	 * This method sets a player as the owner of square/property
 	 * @param h The player buying the square 

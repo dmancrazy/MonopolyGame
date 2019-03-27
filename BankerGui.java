@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class BankerGui {
-
+	
    
 
     public int viewNewProperty(Player player, Square current) {
@@ -30,10 +30,10 @@ public class BankerGui {
 
 
     public void stayAtRivalProperty(Player player, Square current) {
-    	System.out.print(player.getName() + " has landed on the " + current.getName() +
+    	/*System.out.print(player.getName() + " has landed on the " + current.getName() +
 			" property and must pay $" + current.getRent() + " to the property owner, which is " +
 			current.getOwner().getName() + ".\n" + player.getName() + " has $" +
-			player.getBalance() + " in their account." );
+			player.getBalance() + " in their account." );*/
 	//	check = kb.next();
 		payRent(player, current);
 		//check = kb.next();
@@ -50,8 +50,8 @@ public class BankerGui {
 		property.setOwner(p);
 		p.addPropertiesOwned(property);
 		p.addColorToList(property.getColor());
-		System.out.println(p.getName() + " has purchased " + property.getName() + " for $" + property.getCost() +
-		". Their new balance is $" + p.getBalance());
+		//System.out.println(p.getName() + " has purchased " + property.getName() + " for $" + property.getCost() +
+		//". Their new balance is $" + p.getBalance());
 	}
 
 	/**
@@ -61,11 +61,11 @@ public class BankerGui {
    	*/
 	public void payRent(Player p, Square property) {
 		p.changeBalance(-1*property.getRent());
-		System.out.println("\n" + p.getName() + " spent $" + property.getRent() + " to spend the night at " +
-			property.getName() + " and their new balance is $" + p.getBalance() + ".\n");
+	//	System.out.println("\n" + p.getName() + " spent $" + property.getRent() + " to spend the night at " +
+	//		property.getName() + " and their new balance is $" + p.getBalance() + ".\n");
 		property.getOwner().changeBalance(property.getRent());
-		System.out.println(property.getOwner().getName() + " recieved $" + property.getRent() + " as rent from " +
-			p.getName() +". Their new balance is $" + property.getOwner().getBalance() + ".");
+		//System.out.println(property.getOwner().getName() + " recieved $" + property.getRent() + " as rent from " +
+	//		p.getName() +". Their new balance is $" + property.getOwner().getBalance() + ".");
 	}
 
 }

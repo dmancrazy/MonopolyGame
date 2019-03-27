@@ -58,11 +58,18 @@ public class BoardGameGui {
 	private Button Roll = new Button();
 	private int coordinateVariable=0;
 	private BankerGui banker= new BankerGui();
-	boolean yesNo=false;
+	private boolean yesNo=false;
+	private boolean jailYesNo=false;
 	private Label balanceLabel1;
 	private Label balanceLabel2;
 	private Label balanceLabel3;
 	private Label balanceLabel4;
+	private Label occupants = new Label("");
+	private String ourString; 
+	private Label propertyList1 = new Label ("");
+	private Label propertyList2 = new Label ("");
+	private Label propertyList3 = new Label ("");
+	private Label propertyList4 = new Label ("");
 // Initialize all names of each squares
 	public BoardGameGui(ArrayList<Player> nPlayers) {
 		this.board = BoardMaker.DefaultBoard();
@@ -146,6 +153,7 @@ public Scene getScene2() {
 					//title.setStyle("-fx-background-color: grey");
 				//	}
 			square.getChildren().add(title);
+			square.getChildren().add(occupants);
 			square.setStyle("-fx-border-color: black");
 			//ArrayList<String> playerNames = new ArrayList<String>();
 			squares.add(square);
@@ -211,30 +219,38 @@ public Scene getScene2() {
 		GridPane.setConstraints(botCard, 9, 1);
 		GridPane.setConstraints(pCard3, 9, 9);
 		GridPane.setConstraints(pCard4, 1, 9);
-		GridPane.setConstraints(turn, 13, 5);
-		GridPane.setConstraints(turnMessage,13,4);
+		GridPane.setConstraints(turn, 13, 4);
+		GridPane.setConstraints(turnMessage,13,3);
+		GridPane.setConstraints(propertyList1,13,5);
+		GridPane.setConstraints(propertyList2,13,6);
+		GridPane.setConstraints(propertyList3,13,7);
+		GridPane.setConstraints(propertyList4,13,8);
 		//GridPane.setConstraints(checknames, 13, 2);
 	
 	// adds all the named squares onto the board/gridpane
 		gridBoard.getChildren().addAll(squares.get(0), squares.get(1), squares.get(2), squares.get(3), squares.get(4), squares.get(5), squares.get(6), squares.get(7), squares.get(8), squares.get(9),
 				squares.get(10), squares.get(11), squares.get(12), squares.get(13), squares.get(14), squares.get(15), squares.get(16), squares.get(17), squares.get(18), squares.get(19), squares.get(20), squares.get(21), squares.get(22), squares.get(23),
 				squares.get(24), squares.get(25), squares.get(26), squares.get(27), squares.get(28), squares.get(29), squares.get(30), squares.get(31), squares.get(32), squares.get(33), squares.get(34), squares.get(35), squares.get(36), squares.get(37),
-				squares.get(38), squares.get(39),  actions, gameTitle, pCard1, pCard2, pCard3, pCard4, botCard, turn, turnMessage);
+				squares.get(38), squares.get(39),  actions, gameTitle, pCard1, pCard2, pCard3, pCard4, botCard, turn, turnMessage,propertyList1,propertyList2,propertyList3,propertyList4);
 	// run the window with the board
 		Scene scene2 = new Scene(gridBoard, 1600, 1000);
 		return scene2;
 	}
 
-
+	
 	// The action that occurs after number of players is picked		
 		public void placePlayers() {
 			// this creates player cards according to the number of players picked above
 			if (players.size() == 1) {
 				balanceLabel1 =new Label("balance: 1500" );
+				propertyList1= new Label (players.get(0).getName()+ "doesn't own any properties yet");
+				
 				pCard1.getChildren().addAll(new Label(players.get(0).getName()), balanceLabel1);
 
 			}
 			else if (players.size() == 2) {
+				propertyList1= new Label (players.get(0).getName()+ "doesn't own any properties yet");
+				propertyList2= new Label (players.get(1).getName()+ "doesn't own any properties yet");
 				balanceLabel1 =new Label("balance: 1500");
 				balanceLabel2 = new Label("balance: 1500");
 				
@@ -243,6 +259,9 @@ public Scene getScene2() {
 
 			}
 			else if (players.size() == 3) {
+				propertyList1= new Label (players.get(0).getName()+ "doesn't own any properties yet");
+				propertyList2= new Label (players.get(1).getName()+ "doesn't own any properties yet");
+				propertyList3= new Label (players.get(2).getName()+ "doesn't own any properties yet");
 				balanceLabel1 =new Label("balance: 1500");
 				balanceLabel2 = new Label("balance: 1500");
 				balanceLabel3 = new Label("balance: 1500");
@@ -252,6 +271,10 @@ public Scene getScene2() {
 
 			}
 			else if (players.size() == 4) {
+				propertyList1= new Label (players.get(0).getName()+ "doesn't own any properties yet");
+				propertyList2= new Label (players.get(1).getName()+ "doesn't own any properties yet");
+				propertyList3= new Label (players.get(2).getName()+ "doesn't own any properties yet");
+				propertyList4= new Label (players.get(3).getName()+ "doesn't own any properties yet");
 				balanceLabel1 =new Label("balance: 1500");
 				balanceLabel2 = new Label("balance: 1500");
 				balanceLabel3 =new Label("balance: 1500");
@@ -278,7 +301,7 @@ public Scene getScene2() {
 					
 			}
 		}
-
+		// calling turn update means a terminal action that ends a turn and resets all counters
 		public void	turnUpdate(){
 			playersTurn+=1;
 			if (playersTurn>players.size()-1){
@@ -293,23 +316,50 @@ public Scene getScene2() {
 			refresh();
 			
 			if(players.size()==1){
+				propertyList1.setText(players.get(0).getName() + printProperties(players.get(0).getPropertiesOwned()));
 				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
 			}
 			else if(players.size()==2){
+				propertyList1.setText(players.get(0).getName() + printProperties(players.get(0).getPropertiesOwned()));
+				propertyList2.setText(players.get(1).getName() + printProperties(players.get(1).getPropertiesOwned()));
 				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
 				balanceLabel2.setText("balance: "+ players.get(1).getBalance());
 			}
 			else if (players.size()==3){
+				propertyList1.setText(players.get(0).getName() + printProperties(players.get(0).getPropertiesOwned()));
+				propertyList2.setText(players.get(1).getName() + printProperties(players.get(1).getPropertiesOwned()));
+				propertyList3.setText(players.get(2).getName() + printProperties(players.get(2).getPropertiesOwned()));
 				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
 				balanceLabel2.setText("balance: "+ players.get(1).getBalance());
 				balanceLabel3.setText("balance: "+ players.get(2).getBalance());
 			}
 			else if(players.size()==4){
+				propertyList1.setText(players.get(0).getName() + printProperties(players.get(0).getPropertiesOwned()));
+				propertyList2.setText(players.get(1).getName() + printProperties(players.get(1).getPropertiesOwned()));
+				propertyList3.setText(players.get(2).getName() + printProperties(players.get(2).getPropertiesOwned()));
+				propertyList4.setText(players.get(3).getName() + printProperties(players.get(3).getPropertiesOwned()));
 				balanceLabel1.setText("balance: "+ players.get(0).getBalance());
 				balanceLabel2.setText("balance: "+ players.get(1).getBalance());
 				balanceLabel3.setText("balance: "+ players.get(2).getBalance());
 				balanceLabel4.setText("balance: "+ players.get(3).getBalance());
 			}
+			for (int j =0; j>39; j++){
+				squares.get(j).getChildren().clear();
+			}
+			/*for(Player player: players){
+				for( Square square: board){
+					if(player.getPosition()==square.getId()){
+						occupants.setText(player.getName());
+						squares.get(player.getPosition()).getChildren().add(occupants);
+						
+					}
+					//else if(player.getPosition()!=square.getId()){
+					//	occupants.setText("");
+					//	squares.get(player.getPosition()).getChildren().remove(occupants);
+					//}
+				}
+			}*/
+			playerTurnLabel.setText("it is " + players.get(playersTurn).getName()+ "'s turn");
 		
 			
 		}
@@ -319,14 +369,57 @@ public Scene getScene2() {
 			messageCount=0;
 			coordinateVariable=0;
 			yesNo=false;
+			jailYesNo=false;
 			
 		}
+		public String printProperties(ArrayList<Square> s){
+		String toReturn = "Properties : ";
+		if(s.size()==0){ toReturn=" doesn't own properties yet";
+		}
+		else{
+			for( Square square: s){
+				if (toReturn.length()>100){
+					toReturn=toReturn+"\n";
+					
+				}
+				toReturn= toReturn+  square.getName() + ", ";
+				
+				
+			}
+		}
+		return toReturn;
+		
+	}
+	
 		
 		
 	public class rollHandle implements EventHandler<ActionEvent> {
 		@Override
+		//add two wrappers
+		
 		public void handle(ActionEvent event) {
-			if (actionCount==0){
+			if (players.get(playersTurn).getJail()==true && jailYesNo==false){
+				//move.jailHandler(players.get(playersTurn))
+				turnMessage.setText("You are in jail. Would you like to pay 100$ to get out, or roll for doubles?");
+				Buy.setText("Pay");
+				Roll.setText("Roll");
+				jailYesNo=true;
+				
+			}
+			else if( jailYesNo==true){
+					ourString=move.jailRoll(players.get(playersTurn));
+					// if they roll doubles or pay they get a turn;
+					turnMessage.setText(ourString);
+					turnUpdate();
+					//move.jailHandler(players.get(playersTurn))
+				//	player.changeBalance(-100);
+				//	player.setJail(false);
+			}
+			
+				
+				
+			
+			else if (actionCount==0){
 				actionCount+=1;
 				turnMessage.setText("Click roll to roll the dice");
 				Buy.setText("Buy");
@@ -342,28 +435,47 @@ public Scene getScene2() {
 			}
 			else if (actionCount==2){
 				messageCount=move.move2(players.get(playersTurn));
+				
 				if (messageCount==4){
-					turnMessage.setText("Player passed go and is visiting jail Click Ok to continue");
+					turnMessage.setText(players.get(playersTurn).getName()+" passed go and is visiting jail Click Ok to continue");
+									actionCount++;
+									buyCount=move.coordinate2(players.get(playersTurn));
+				coordinateVariable=move.move3(players.get(playersTurn));
 				}
 				
 				else if (messageCount==3){
-					turnMessage.setText("Player passed go  Click Ok to continue");
+					turnMessage.setText(players.get(playersTurn).getName()+" passed go, Collect 200$ Click Ok to continue");
+									actionCount++;
+									buyCount=move.coordinate2(players.get(playersTurn));
+				coordinateVariable=move.move3(players.get(playersTurn));
 				}
 				else if (messageCount==2){
-					turnMessage.setText("Player goes to jail  Click Ok to continue");
+					Roll.setText("Roll");
+					//set this shit to say click continue to continue
+					turnMessage.setText(players.get(playersTurn).getName()+" goes to jail. Roll doubles to get out next time. Click roll to continue");
+					//player.setJailcount();
+					
+					turnUpdate();
 				}
-				else if (messageCount==3){
-					turnMessage.setText("Player just visiting jail  Click Ok to continue ");
+				else if (messageCount==1){
+					turnMessage.setText(players.get(playersTurn).getName()+" is just visiting jail  Click Ok to continue ");
+					actionCount++;
+					buyCount=move.coordinate2(players.get(playersTurn));
+					coordinateVariable=move.move3(players.get(playersTurn));
 				}
 				else{
 					turnMessage.setText("Nice to not be in jail. Press ok to continue");
+					actionCount++;
+					buyCount=move.coordinate2(players.get(playersTurn));
+					coordinateVariable=move.move3(players.get(playersTurn));
 				}
 				messageCount=0;
-				actionCount++;
-				
+			//	actionCount++;
+			//	buyCount=move.coordinate2(players.get(playersTurn));
+			//	coordinateVariable=move.move3(players.get(playersTurn));
 			}
 			else if (actionCount==3){
-				coordinateVariable=move.move3(players.get(playersTurn));
+				//coordinateVariable=move.move3(players.get(playersTurn));
 				if (coordinateVariable==1){
 					turnMessage.setText(players.get(playersTurn).getName()+" has landed on their own property");
 					actionCount=0;
@@ -373,14 +485,16 @@ public Scene getScene2() {
 				}
 				else if (coordinateVariable==2){
 
-					turnMessage.setText(players.get(playersTurn).getName()+" has landed at a rivals property. Press Ok to continue");
+					turnMessage.setText(players.get(playersTurn).getName()+" has landed at " + move.getOwner() +"'s property. They will pay them "+ board.get(buyCount-1).getRent()+ " Press Ok to continue");
+					move.payRival(players.get(playersTurn));
 					//set thus shit to update a pay count
-					actionCount++;
+					//actionCount++;
 				//	buyCount=move.coordinate2(players.get(playersTurn));
-					coordinateVariable=0;
+					//coordinateVariable=0;
+					turnUpdate();
 				}
 				else if (coordinateVariable==3){
-					buyCount=move.coordinate2(players.get(playersTurn));
+					//buyCount=move.coordinate2(players.get(playersTurn));
 					turnMessage.setText(players.get(playersTurn).getName()+"  has landed at " + board.get(buyCount-1).getName()+ ". Buy for " + board.get(buyCount-1).getCost() +" ?");
 		
 					actionCount++;
@@ -415,7 +529,7 @@ public Scene getScene2() {
 				/*	Buy.setText("Yes");
 					Roll.setText("No");
 					yesNo=true;*/
-					banker.buyProperty(players.get(playersTurn),board.get(buyCount-1));
+				move.buy(players.get(playersTurn));
 				turnMessage.setText(players.get(playersTurn).getName() + " has purchased " +board.get(buyCount-1).getName()+ " for " + board.get(buyCount-1).getCost());
 				buyCount=-1;
 				turnUpdate();
@@ -440,8 +554,16 @@ public Scene getScene2() {
 				buyCount=-1;
 				actionCount=0;
 				}
+			else if(jailYesNo==true){
+					players.get(playersTurn).changeBalance(-100);
+					players.get(playersTurn).setJail(false);
+					jailYesNo=false;
+					turnMessage.setText("You have paid 100$ and are free!");
+					turnUpdate();
+				}
 			}
 		}
+	
 	
 		
 		

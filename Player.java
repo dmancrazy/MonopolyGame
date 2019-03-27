@@ -92,6 +92,7 @@ public class Player{
      * This method adds 1 to a player's number of jail visits
      * If a player has been in jail for 3 turns, they are forced out
      */
+	 // this should be handled in the main program
     public void addJailCount(int i) {
         jailCount += i;
         if (jailCount == 3) {

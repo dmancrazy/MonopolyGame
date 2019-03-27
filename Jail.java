@@ -40,18 +40,19 @@ public class Jail {
 		}
 	}
 
-	public void arrest(Player player, Square current, MonopolyConfiguration config) {
-		current.getOccupants().remove(player.getIcon());
+	public void arrest(Player player) {
+		// removing parameters  Square current, MonopolyConfiguration config
+		//current.getOccupants().remove(player.getIcon());
 		player.setJail(true);
 		player.changePosition(10);
-		current = config.getBoard().get(player.getPosition());
-		current.getOccupants().add(player.getIcon());
-		System.out.println("Go To Jail ! You are now moved to jail. Next turn you will start in in jail " +
-			" you must roll double or pay bail to get out.");
-		check = kb.next();
+		//current = config.getBoard().get(player.getPosition());
+		//current.getOccupants().add(player.getIcon());
+		//System.out.println("Go To Jail ! You are now moved to jail. Next turn you will start in in jail " +
+		//" you must roll double or pay bail to get out.");
+		//check = kb.next();
 	}
 
-	public void justVisiting(Player player) {
+	/*public void justVisiting(Player player) {
 		System.out.println(player.getName() + " is just visiting jail today.");
-	}
+	}*/
 }

@@ -19,7 +19,7 @@ public class MovementGui{
     private Jail jail = new Jail();
     private Scanner kb = new Scanner(System.in);
     private String check;
-    private Action action = new Action();
+    private ActionGui action = new ActionGui();
     private BankerGui banker = new BankerGui();
     // set proper parameters.
 
@@ -33,14 +33,12 @@ public class MovementGui{
     }
 	public String move1(Player player) {
 		current = config.getBoard().get(player.getPosition());
-		if (player.getJail() == true) {
-			jail.nightInJail(player);
-			return("player in jail");
-		}
-		else {
+		
 			
 		roll1 = dice.roll();
 		roll2 = dice.roll();
+		//roll1=10;
+		//roll2=20;
 		player.changePosition((roll1 + roll2)+ player.getPosition());
 		current = config.getBoard().get(player.getPosition());
 		//current.getOccupants().add(player.getIcon());
@@ -51,7 +49,7 @@ public class MovementGui{
 		return(player.getName() + " rolled a " + roll1 + " and a " + roll2 + ", so they move " +
 		(roll1 + roll2) + " spaces.\n");
 		}
-	}
+	
 	public int move2(Player player) {
 		
 		int toReturn = 0;
@@ -64,15 +62,25 @@ public class MovementGui{
 				toReturn=3;
 			}
 			if (player.getPosition() == 30) {
-				jail.arrest(player, current, config);
+				//jail.arrest(player);
+				player.setJail(true);
+				player.changePosition(10);
 				toReturn=2;
 			}
 
-			if (player.getPosition() == 10) {
-				jail.justVisiting(player);
+			if (player.getPosition() == 10 &&player.getJail()==false) {
+				//jail.justVisiting(player);
 				toReturn=1;
 				
 			}
+			/*if (player.getPosition() == 10 &&player.getJail()==true) {
+				//jail.justVisiting(player);
+				toReturn=5;
+				
+			}*/
+			//System.out.print(toReturn);
+			System.out.print(player.getJail());
+			
 			return toReturn;
 	}
 	public int move3(Player player){
@@ -83,7 +91,7 @@ public class MovementGui{
 					toReturn=3;
 				}
 
-				else if (current.getOwner() != player) {
+				else if (config.getBoard().get(player.getPosition()).getOwner() != player) {
 					//banker.stayAtRivalProperty(player, current);
 					toReturn=2;
 				}
@@ -94,6 +102,8 @@ public class MovementGui{
 					
 				}
 			}
+			//System.out.print(toReturn);
+			//System.out.print(current.getOwned());
 			return toReturn;
 	}
 	
@@ -103,8 +113,36 @@ public class MovementGui{
 		return check;
 		
 	}
+	public void buy(Player player){
+		banker.buyProperty(player, current);
+	}
+	public void payRival(Player player){
+		banker.stayAtRivalProperty(player,current );
+	}
+	public String getOwner(){
+		return current.getOwnerName();
+	}
+	public String jailRoll(Player player){
+		String toReturn=" ";
+			//if (player.getJail() == true) {
+			//jail.nightInJail(player);
+			//return("player in jail");
+			roll1 = dice.roll();
+			roll2 = dice.roll();
+			if (roll1==roll2){
+				toReturn="Success! You rolled two " + roll1 + "'s, you are free!";
+				player.setJail(false);
+			}
+			else{
+				toReturn="Sorry You rolled a " +roll1 + " & a " + roll2;
+				player.addJailCount(1);
+			}
+		return toReturn;
+		}
+		
+	}
 	
-}
+
 		
 	
 		//current.getOccupants().add(player.getIcon());
