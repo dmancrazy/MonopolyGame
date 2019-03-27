@@ -147,46 +147,21 @@ public Scene getScene2() {
 		gridBoard.setPadding(new Insets(10, 10, 10, 10));
 
 	// configure the positions each squares will go into (x,y = 0, 0 = top left corner)
-		GridPane.setConstraints(squares.get(0), 10, 10);
-		GridPane.setConstraints(squares.get(1), 9, 10);
-		GridPane.setConstraints(squares.get(2), 8, 10);
-		GridPane.setConstraints(squares.get(3), 7, 10);
-		GridPane.setConstraints(squares.get(4), 6, 10);
-		GridPane.setConstraints(squares.get(5), 5, 10);
-		GridPane.setConstraints(squares.get(6), 4, 10);
-		GridPane.setConstraints(squares.get(7), 3, 10);
-		GridPane.setConstraints(squares.get(8), 2, 10);
-		GridPane.setConstraints(squares.get(9), 1, 10);
-		GridPane.setConstraints(squares.get(10), 0, 10);
-		GridPane.setConstraints(squares.get(11), 0, 9);
-		GridPane.setConstraints(squares.get(12), 0, 8);
-		GridPane.setConstraints(squares.get(13), 0, 7);
-		GridPane.setConstraints(squares.get(14), 0, 6);
-		GridPane.setConstraints(squares.get(15), 0, 5);
-		GridPane.setConstraints(squares.get(16), 0, 4);
-		GridPane.setConstraints(squares.get(17), 0, 3);
-		GridPane.setConstraints(squares.get(18), 0, 2);
-		GridPane.setConstraints(squares.get(19), 0, 1);
-		GridPane.setConstraints(squares.get(20), 0, 0);
-		GridPane.setConstraints(squares.get(21), 1, 0);
-		GridPane.setConstraints(squares.get(22), 2, 0);
-		GridPane.setConstraints(squares.get(23), 3, 0);
-		GridPane.setConstraints(squares.get(24), 4, 0);
-		GridPane.setConstraints(squares.get(25), 5, 0);
-		GridPane.setConstraints(squares.get(26), 6, 0);
-		GridPane.setConstraints(squares.get(27), 7, 0);
-		GridPane.setConstraints(squares.get(28), 8, 0);
-		GridPane.setConstraints(squares.get(29), 9, 0);
-		GridPane.setConstraints(squares.get(30), 10, 0);
-		GridPane.setConstraints(squares.get(31), 10, 1);
-		GridPane.setConstraints(squares.get(32), 10, 2);
-		GridPane.setConstraints(squares.get(33), 10, 3);
-		GridPane.setConstraints(squares.get(34), 10, 4);
-		GridPane.setConstraints(squares.get(35), 10, 5);
-		GridPane.setConstraints(squares.get(36), 10, 6);
-		GridPane.setConstraints(squares.get(37), 10, 7);
-		GridPane.setConstraints(squares.get(38), 10, 8);
-		GridPane.setConstraints(squares.get(39), 10, 9);
+		for (int i = 0 ; i < 10 ; i++) {
+			GridPane.setConstraints(squares.get(i), 10-i, 10);
+		}
+		
+		for (int j = 0 ; j < 10 ; j++) {
+			GridPane.setConstraints(squares.get(j + 10), 0, 10 - j);
+		}
+		
+		for (int k = 0 ; k < 10 ; k++) {
+			GridPane.setConstraints(squares.get(k + 20), k, 0);
+		}
+		
+		for (int n = 0 ; n < 10 ; n++) {
+			GridPane.setConstraints(squares.get(n + 30), 10, n);
+		}
 		
 		// positioning of the "menu items" and player cards/ name inputs
 		GridPane.setConstraints(actions, 13, 10);
