@@ -1,4 +1,5 @@
 import javafx.application.Application;
+
 import javafx.scene.Scene;
 import javafx.scene.Group;
 import javafx.stage.Stage;
@@ -10,19 +11,23 @@ import javafx.scene.control.Button;
 import javafx.geometry.Pos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import java.util.ArrayList;
+
 
 public class MonopolyApp extends Application {
 	protected VBox root = new VBox();
+	protected VBox placeHolderBoard = new VBox();
+	protected HBox menuBoard = new HBox();
 	protected TextField p1Name = new TextField("Player 1's Name");
 	protected TextField p2Name = new TextField("Player 2's Name");
 	protected TextField p3Name = new TextField("Player 3's Name");
 	protected TextField p4Name = new TextField("Player 4's Name");
 	protected ArrayList<Player> players = new ArrayList<Player>();
+	protected ArrayList<ImageView> icons = new ArrayList<ImageView>();
 	protected int totalPlayers;
 	protected ComboBox<Integer> numChoice;
 	protected HBox numPlayers = new HBox();
@@ -33,7 +38,7 @@ public class MonopolyApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		window = primaryStage;
-		scene1 = new Scene(root, 600, 400); 
+		scene1 = new Scene(menuBoard, 600, 400); 
 		primaryStage.setTitle("Monopoly Setup");
 		primaryStage.setScene(scene1);
 		primaryStage.show();
@@ -54,7 +59,7 @@ public class MonopolyApp extends Application {
 		numPlayers.setAlignment(Pos.TOP_CENTER);
 		numPlayers.getChildren().addAll(numChoice, ok);
 		root.getChildren().add(numPlayers);
-
+		menuBoard.getChildren().addAll(placeHolderBoard , root);
 		ok.setOnAction(new nameEntries());
 					
 	}
@@ -119,6 +124,7 @@ public class MonopolyApp extends Application {
 			}
 			BoardGameGui monopolyGUI = new BoardGameGui(players);
 			window.setScene(monopolyGUI.getScene2());
+			//placeHolderBoard.getChildren().add(monopolyGUI);
 			
 
 
