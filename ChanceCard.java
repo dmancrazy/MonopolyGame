@@ -20,12 +20,12 @@ public class ChanceCard {
 
 	}
 
-	public void ChanceCardAction(Player p, Square current, MonopolyConfiguration config){
-		if (Card.action.equals("money")) {
-			p.changeBalance(amount);
+	public void ChanceCardAction(Player player, Square current, MonopolyConfiguration config, ChanceCard card){
+		if (card.action.equals("money")) {
+			player.changeBalance(amount);
 		} 
 		
-		else if (Card.action.equals("move")) {
+		else if (card.action.equals("move")) {
 			current.getOccupants().remove(player.getIcon());
 			player.changePosition(movedPosition);
 			current = config.getBoard().get(player.getPosition());
@@ -33,7 +33,7 @@ public class ChanceCard {
 			System.out.println("You drew the [" + name + "] card so I moved you to " + current.getName());
 		} 
 		
-		else if (Card.action.equals("prison")) {
+		else if (card.action.equals("prison")) {
 			current.getOccupants().remove(player.getIcon());
 			player.setJail(true);
 			player.changePosition(10);

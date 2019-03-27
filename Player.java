@@ -16,8 +16,9 @@ public class Player{
     private ArrayList<Square> propertiesOwned = new ArrayList<Square>();
     private boolean jail = false;
     private int jailCount = 0;
-    private String occupantValue;
+    private String icon;
     private boolean passedGo = false;
+	private ArrayList<String> playerColorList = new ArrayList<String>();
 
     /**
      * This method constructs a new player with a specific name and token that shows on the board
@@ -26,7 +27,7 @@ public class Player{
      */
     public Player(String aName, String ov){
     this.name = aName;
-    this.occupantValue = ov;
+    this.icon = ov;
     }
 
     /**
@@ -150,13 +151,18 @@ public class Player{
     public void setPassedGo(boolean b) {
         passedGo = b;
     }
-
+	
     /**
      * This method allows you to get the token of a player on the board
-     * @return occupantValue A token of a player
+     * @return icon A token of a player
      */
-    public String getOccupantValue() {
-        return occupantValue;
+    public String getIcon() {
+        return icon;
     }
-
+	public void addColorToList(String aColor){
+		playerColorList.add(aColor);
+	}
+	public ArrayList<String>getPlayerColorList(){
+		return playerColorList;
+	}
 }

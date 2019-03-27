@@ -18,6 +18,8 @@ public class MonopolyGame {
 	private boolean quit = false;
 	private Scanner sc = new Scanner(System.in);
 	private String check;
+	//I added this but not sure if we need it,
+	private Houses houseFunction = new Houses(config);
 
 	/**
 	 * Prompts the user for basic specifications of the game with a brief intro

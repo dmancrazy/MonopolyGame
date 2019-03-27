@@ -17,7 +17,10 @@ public class Square {
 	private ArrayList<String> occupants = new ArrayList<String>();
 	private boolean owned = false;
 	private Player owner;
+	private int housePrice;
+	private int mortgageValue;
 	//private int houseMultiplier = 1;
+	private int houseAmount;
 
 	/**
 	 * This constructs a new square with some name, type, color, cost, and rent
@@ -27,12 +30,14 @@ public class Square {
 	 * @param aCost The cost of a square/property
 	 * @param r The rent of a square/property
 	 */
-	public Square(String n, String t, String c, int aCost , int r) {
+	public Square(String n, String t, String c, int aCost , int r, int hp, int mv) {
 		name = n;
 		type = t;
 		color = c;
 		cost = aCost;
 		rent = r;
+		housePrice= hp;
+		mortgageValue=mv;
 	}
 
 	/**
@@ -72,6 +77,23 @@ public class Square {
 	 * @return rent The rent of the square/property
 	 */
 	public int getRent() {
+		// setting rent to be on a constant mutliplier, it is not 100% accurate to real game prices
+		if( houseAmount==0){
+			return rent;
+		}
+		else if(houseAmount==1){
+			return rent*5;
+		}
+		else if(houseAmount==2){
+			return rent*10;
+		}
+		else if(houseAmount==3){
+			return rent*20;
+
+		}
+		else if(houseAmount==4){
+			return rent*30;
+		}
 		return rent;
 	}
 
@@ -141,4 +163,12 @@ public class Square {
 	public void setOwner (Player h) {
 		owner = h;
 	}
+
+	public int getHousePrice(){
+		return housePrice;
+	}
+	public void setHouseAmount(int aHouseAmount){
+		houseAmount=aHouseAmount;
+	}
+	
 }

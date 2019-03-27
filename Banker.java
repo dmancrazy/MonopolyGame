@@ -49,6 +49,7 @@ public class Banker {
 		property.setOwned(true);
 		property.setOwner(p);
 		p.addPropertiesOwned(property);
+		p.addColorToList(property.getColor());
 		System.out.println(p.getName() + " has purchased " + property.getName() + " for $" + property.getCost() +
 		". Their new balance is $" + p.getBalance());
 	}
@@ -66,4 +67,5 @@ public class Banker {
 		System.out.println(property.getOwner().getName() + " recieved $" + property.getRent() + " as rent from " +
 			p.getName() +". Their new balance is $" + property.getOwner().getBalance() + ".");
 	}
+
 }

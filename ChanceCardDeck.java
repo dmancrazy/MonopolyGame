@@ -13,7 +13,7 @@ public static ArrayList<ChanceCard> defaultDeck() {
     deck.add(new ChanceCard("Salmonella", "money", -150, 0));
     deck.add(new ChanceCard("WinLottery", "money", 1000, 0));
     deck.add(new ChanceCard("LuckyPenny", "money", 1, 0));
-    deck.add(new Chancecard("CaffeineRush", "move", 0, 3));
+    deck.add(new ChanceCard("CaffeineRush", "move", 0, 3));
     deck.add(new ChanceCard("Mugged", "money", -50, 0));
     deck.add(new ChanceCard("ForgotMyWallet", "move", 0, -5));
     deck.add(new ChanceCard("YouAreAdopted", "money", -500));
