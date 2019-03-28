@@ -52,6 +52,7 @@ public class BoardGameGui {
 	private ArrayList<Label> playerNumbers = new ArrayList<Label>();
 	private ArrayList<Player> players = new ArrayList<Player>();
 	private static boolean quit = false;
+	private HousesGui houseChecker = new HousesGui();
 	private MonopolyConfiguration config= new MonopolyConfiguration();
 	private MovementGui move = new MovementGui(config);
 	private Button Buy = new Button();
@@ -70,6 +71,8 @@ public class BoardGameGui {
 	private Label propertyList2 = new Label ("");
 	private Label propertyList3 = new Label ("");
 	private Label propertyList4 = new Label ("");
+	private Label title = new Label("");
+	
 // Initialize all names of each squares
 	public BoardGameGui(ArrayList<Player> nPlayers) {
 		this.board = BoardMaker.DefaultBoard();
@@ -343,22 +346,10 @@ public Scene getScene2() {
 				balanceLabel3.setText("balance: "+ players.get(2).getBalance());
 				balanceLabel4.setText("balance: "+ players.get(3).getBalance());
 			}
-			for (int j =0; j>39; j++){
-				squares.get(j).getChildren().clear();
-			}
-			/*for(Player player: players){
-				for( Square square: board){
-					if(player.getPosition()==square.getId()){
-						occupants.setText(player.getName());
-						squares.get(player.getPosition()).getChildren().add(occupants);
-						
-					}
-					//else if(player.getPosition()!=square.getId()){
-					//	occupants.setText("");
-					//	squares.get(player.getPosition()).getChildren().remove(occupants);
-					//}
-				}
-			}*/
+			
+			
+		
+			
 			playerTurnLabel.setText("it is " + players.get(playersTurn).getName()+ "'s turn");
 		
 			
@@ -372,6 +363,57 @@ public Scene getScene2() {
 			jailYesNo=false;
 			
 		}
+		public void boardUpdate(){
+			for (int j =0; j<39; j++){
+				squares.get(j).getChildren().clear();
+				title= getTitle(j);
+				squares.get(j).getChildren().add(title);
+				for(Player player:players){
+					if(player.getPosition()==board.get(j).getId()){
+						occupants = new Label( player.getName());
+						squares.get(j).getChildren().add(occupants);
+					}
+				}		
+			}
+		}
+		
+		public Label getTitle(int anID){
+			title = new Label (board.get(anID).getName());
+			
+			if(anID== 1|| anID==3 ){
+				 title.setStyle("-fx-background-color: brown");
+				 }
+
+				else if(anID== 6|| anID==8 ||anID==9 ){
+					title.setStyle("-fx-background-color: lightblue");
+					}
+
+				else if(anID==11 || anID== 13|| anID==14){ 
+					title.setStyle("-fx-background-color: purple");
+					}
+
+				else if(anID== 16|| anID== 18|| anID==19){ 
+					title.setStyle("-fx-background-color: orange");
+					}
+
+				else if(anID== 21|| anID== 23||anID==24 ){
+					title.setStyle("-fx-background-color: red");
+					}
+				else if(anID== 26|| anID==27 ||anID==29 ){
+					title.setStyle("-fx-background-color: yellow");
+					}
+
+				else if(anID== 31|| anID== 32|| anID==34){
+					title.setStyle("-fx-background-color: green");
+					}
+
+				else if(anID== 37|| anID==39 ){	
+					title.setStyle("-fx-background-color: blue");
+					
+			}
+			return title;
+		}
+		
 		public String printProperties(ArrayList<Square> s){
 		String toReturn = "Properties : ";
 		if(s.size()==0){ toReturn=" doesn't own properties yet";
@@ -430,6 +472,7 @@ public Scene getScene2() {
 				actionCount++;
 				Roll.setText("Ok");
 				turnMessage.setText(move.move1(players.get(playersTurn))+"Click ok to continue");
+				boardUpdate();
 			
 			
 			}
