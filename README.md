@@ -1,20 +1,29 @@
 # Monopoly Game
-
+This project was inspired by the hasbro game Monopoly.
 The project can be found in this repository.
 https://github.com/AmkaTsendjargal/MonopolyGame
 
-# Running
-Download all .java files within the repository and put them all into the same directory. After changing directories to the one containing the files using the command prompt; run the following commands in the directory containing the .java files.
+# Junit Testing
+Download all .java files within the repository (Including the Test classes) and put them all into the same directory. also make sure that this directory has a copy of hamcrest-core-1.3.jar and junit-4.12.jar. After changing directories to the one containing these files using the command prompt; run the following commands in the directory containing the .java files.
+```
+javac -cp .;hamcrest-core-1.3.jar;junit-4.12.jar *.java
+java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore SquareTest
+```
+# Running the Game
+Download all of the .java files(except for the Test classes) all .png and all .jpg files and place them all in the same directory. It is important that you do not place the Test classes together with these files because it won't compile if you are trying to run the game.
+
+# Text-Based Game
+After using the command prompt to change directories to the one containing all of the java filesand few images run the following commands in that directory.
+```
+javac *.java
+java TextBasedGame
+```
+# GUI Game
+After using the command prompt to change directories to the one containing all of the java filesand few images run the following commands in that directory.
 ```
 javac *.java
 java MonopolyApp
 ```
-For the text-based game:
-```
-javac *.java
-java Game
-```
-
 Then choose the number of players in the first scene and press ok. Then assign names to all of the players and press the start game button.
 
 # Citations and References
@@ -34,5 +43,8 @@ StackOverFlow: https://stackoverflow.com/questions/14370554/how-to-programmatica
 Monopoly Rents: http://www.falstad.com/monopoly.html
 
 YouTube: https://youtu.be/7LxWQIDOzyE
+
+https://www.amazon.com/Hasbro-Monopoly-Replacement-Board/dp/B017MNUCXC:
+The source of our main background image. We do not in any way have ownership of this image and this project will not be used to make any money. The Monopoly board is liscened and owned by Hasbro and all credit for the invention of the game goes to them.
 
 
