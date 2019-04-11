@@ -118,7 +118,6 @@ public class BoardGameImageGUI {
  
     public void loadPlayersToBoard() {
         Point2D go = squares.get(board.get(0));
-        System.out.println(go.getX() + " " + go.getY());
         int count = 0;
         for (ImageView img : playerSprites.values()) {
             double x = go.getX();
@@ -353,8 +352,6 @@ public class BoardGameImageGUI {
             x = x + xOffset;
             y = y + yOffset;
         }
- 
-        System.out.println("Moved to " + x + " and " + y);
  
         ImageView view = playerSprites.get(player);
  
