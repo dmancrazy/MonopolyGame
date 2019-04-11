@@ -11,7 +11,7 @@ public abstract class Player{
 
     // initializes player name, balance, position/square, number of jail visits, and token name
     private String name;
-    private int balance = 200;
+    private int balance = 1500;
     private int position = 0;
     private ArrayList<Square> propertiesOwned = new ArrayList<Square>();
     private boolean jail = false;

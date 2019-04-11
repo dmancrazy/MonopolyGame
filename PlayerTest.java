@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class PlayerTest {
 
-Player player = new Player("John", "1");
+Player player = new Human("John", "1");
 
 
 
