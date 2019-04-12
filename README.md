@@ -3,14 +3,24 @@ This project was inspired by the hasbro game Monopoly.
 The project can be found in this repository.
 https://github.com/AmkaTsendjargal/MonopolyGame
 
+# Download
+Download the practice folder within the repository (Including the Test classes) and into a directory (I suggest desktop). also make sure that this file has a copy of hamcrest-core-1.3.jar and junit-4.12.jar (which it does).
+
 # Junit Testing
-Download all .java files within the repository (Including the Test classes) and put them all into the same directory. also make sure that this directory has a copy of hamcrest-core-1.3.jar and junit-4.12.jar. After changing directories to the one containing these files using the command prompt; run the following commands in the directory containing the .java files.
+After changing directories to practice using the command prompt; run the following commands in the practice.
 ```
 javac -cp .;hamcrest-core-1.3.jar;junit-4.12.jar *.java
 java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore SquareTest
+or
+java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore PlayerTest
+or
+java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore JailTest
+or 
+java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore Banker
+
 ```
 # Running the Game
-Download all of the .java files(except for the Test classes) all .png and all .jpg files and place them all in the same directory. There should be 3 folders containing .java files called Actions, Configuration and GamePieces. Leave those folders as they are, you don't need to pull the files out. It is important that you do not place the Test classes together with these files because it won't compile if you are trying to run the game.
+There should be 3 folders in practice containing .java files called Actions, Configuration and GamePieces. Leave those folders as they are, you don't need to pull the files out. It is important that you do not place the Test classes together with these files because it won't compile if you are trying to run the game.
 
 # Text-Based Game
 After using the command prompt to change directories to the one containing all of the java filesand few images run the following commands in that directory.
