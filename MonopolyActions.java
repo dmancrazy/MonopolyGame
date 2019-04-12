@@ -42,7 +42,7 @@ public class MonopolyActions {
 		Square sq = board.get(player.getPosition());
 
 		// Checks if a bot player can buy the property it landed on
-		if (player.getName().equals("bot")) {
+		if (player instanceof Bot) {
 			if (player.getBalance() <= sq.getCost()) {
 				confirm = "no";
 			}
