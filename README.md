@@ -28,7 +28,7 @@ java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore Banker
 ```
 
 # Running the Game
-There should be 3 folders in practice containing .java files called Actions, Configuration and GamePieces. Leave those folders as they are, you don't need to pull the files out. It is important that you REMOVE the 4 Test files from this folder because it won't compile if you are trying to run the game.
+There should be 3 folders in practice containing .java files called Actions, Configuration and GamePieces. Leave those folders as they are, you don't need to pull the files out. It is important that you REMOVE the 4 Test files from this folder and delete their respective classesif you have already complied them, because it won't compile if you are trying to run the game.
 
 # Text-Based Game
 After using the command prompt to change directories to the practice and run the following commands in that directory.
