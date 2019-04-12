@@ -10,7 +10,7 @@ javac -cp .;hamcrest-core-1.3.jar;junit-4.12.jar *.java
 java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore SquareTest
 ```
 # Running the Game
-Download all of the .java files(except for the Test classes) all .png and all .jpg files and place them all in the same directory. There should be 3 folders containing .java files called Actions, Configuration and GamePieces. Leace those folders as they are, you don't need to pull the files out. It is important that you do not place the Test classes together with these files because it won't compile if you are trying to run the game.
+Download all of the .java files(except for the Test classes) all .png and all .jpg files and place them all in the same directory. There should be 3 folders containing .java files called Actions, Configuration and GamePieces. Leave those folders as they are, you don't need to pull the files out. It is important that you do not place the Test classes together with these files because it won't compile if you are trying to run the game.
 
 # Text-Based Game
 After using the command prompt to change directories to the one containing all of the java filesand few images run the following commands in that directory.
