@@ -1,5 +1,6 @@
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,11 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
- 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javafx.geometry.*;
+import java.util.*;
  
 public class BoardGameImageGUI {
  
@@ -49,16 +47,11 @@ public class BoardGameImageGUI {
         int count = 0;
         for (Player player : players) {
             ImageView v = new ImageView(new Image(images.get(count)));
- 
             if (player instanceof Bot) {
                 v = new ImageView(new Image(images.get(4)));
             }
             this.playerSprites.put(player, v);
- 
- 
             count++;
- 
- 
         }
  
         //Start 1 in front of go!
@@ -150,10 +143,12 @@ public class BoardGameImageGUI {
         mainBox = new HBox();
         pane = new Pane();
         pane.getChildren().add(imageView);
- 
         VBox menu = new VBox();
+        menu.setAlignment(Pos.TOP_LEFT);
         HBox playerInfo = new HBox();
         Label mainMessages = new Label(messages.welcomeMessage(players));
+        VBox buttons = new VBox();
+        buttons.setAlignment(Pos.BOTTOM_LEFT);
         Button start = new Button("Start");
         start.setPrefSize(150, 80);
         Button rollButton = new Button("Roll");
@@ -186,29 +181,29 @@ public class BoardGameImageGUI {
         finish.getChildren().addAll(restart, quit);
  
         start.setOnAction(e -> {
-            menu.getChildren().remove(start);
+            buttons.getChildren().remove(start);
             if (players.get(pTurn) instanceof Bot) {
                 mainMessages.setText(movement.rollResults(players.get(pTurn)));
-                menu.getChildren().add(ok);
+                buttons.getChildren().add(ok);
                 movePlayerOnBoard(players.get(pTurn));
             }
             else {
-                menu.getChildren().add(rollButton);
+                buttons.getChildren().add(rollButton);
                 mainMessages.setText(messages.turnStartMessage(players.get(pTurn), board));
             }
         });
 
         rollButton.setOnAction(e -> {
             mainMessages.setText(movement.rollResults(players.get(pTurn)));
-            menu.getChildren().remove(rollButton);
-            menu.getChildren().add(ok);
+            buttons.getChildren().remove(rollButton);
+            buttons.getChildren().add(ok);
             movePlayerOnBoard(players.get(pTurn));
         });
         ok.setOnAction(e -> {
             mainMessages.setText((messages.landingMessage(players.get(pTurn), board)) + "\n" + actions.passGoMoney(players.get(pTurn)) + "\n" +
                     actions.actionType(players.get(pTurn), board.get(players.get(pTurn).getPosition())));
             current = board.get(players.get(pTurn).getPosition());
-            menu.getChildren().remove(ok);
+            buttons.getChildren().remove(ok);
             if (players.get(pTurn).getPosition() == 30) {
                 playerSprites.get(players.get(pTurn)).setTranslateX(60);
                 playerSprites.get(players.get(pTurn)).setTranslateY(920);
@@ -217,54 +212,54 @@ public class BoardGameImageGUI {
                 if (!current.getOwned()) {
                     if (players.get(pTurn) instanceof Bot) {
                         mainMessages.setText(actions.actionConfirmation(players.get(pTurn), board, "y"));
-                        menu.getChildren().add(endTurn);
+                        buttons.getChildren().add(endTurn);
                     }
                     else {
-                        menu.getChildren().add(yesNo);
+                        buttons.getChildren().add(yesNo);
                     }
                 } 
                 else {
-                    menu.getChildren().add(accept);
+                    buttons.getChildren().add(accept);
                 }
             } 
             else {
-                menu.getChildren().add(accept);
+                buttons.getChildren().add(accept);
             }
         });
         accept.setOnAction(e -> {
             mainMessages.setText(actions.actionConfirmation(players.get(pTurn), board, "y"));
-            menu.getChildren().remove(accept);
-            menu.getChildren().add(endTurn);
+            buttons.getChildren().remove(accept);
+            buttons.getChildren().add(endTurn);
         });
  
         no.setOnAction(e -> {
             mainMessages.setText(actions.actionConfirmation(players.get(pTurn), board, "n"));
-            menu.getChildren().remove(yesNo);
-            menu.getChildren().add(endTurn);
+            buttons.getChildren().remove(yesNo);
+            buttons.getChildren().add(endTurn);
         });
  
         yes.setOnAction(e -> {
             mainMessages.setText(actions.actionConfirmation(players.get(pTurn), board, "y"));
-            menu.getChildren().remove(yesNo);
-            menu.getChildren().add(endTurn);
+            buttons.getChildren().remove(yesNo);
+            buttons.getChildren().add(endTurn);
         });
  
         endTurn.setOnAction(e -> {
-            menu.getChildren().remove(endTurn);
+            buttons.getChildren().remove(endTurn);
             if (endGame.isLoser(players.get(pTurn))) {
                 mainMessages.setText(endGame.eliminationMessage(players.get(pTurn), players));
             }
             else {
                 pTurn++; 
             }
-            menu.getChildren().add(cont);
+            buttons.getChildren().add(cont);
         });
 
         cont.setOnAction(e -> {
-            menu.getChildren().remove(cont);
+            buttons.getChildren().remove(cont);
             if (endGame.isGameOver(players)) {
                 mainMessages.setText(endGame.victoryMessage(players));
-                menu.getChildren().add(finish);
+                buttons.getChildren().add(finish);
                 return;
             }
             if (pTurn >= players.size()) {
@@ -274,41 +269,41 @@ public class BoardGameImageGUI {
                 if (players.get(pTurn).getJailCount() < 3) {
                     if (players.get(pTurn) instanceof Bot) {
                         mainMessages.setText(jail.botInJail(players.get(pTurn)));
-                        menu.getChildren().add(endTurn);
+                        buttons.getChildren().add(endTurn);
                     }
                     else {
                         mainMessages.setText(messages.jailStartMessage(players.get(pTurn)));
-                        menu.getChildren().add(jailButtons);
+                        buttons.getChildren().add(jailButtons);
                     }
                 }
                 else {
                     mainMessages.setText(jail.forcedBail(players.get(pTurn)) + "\n" + messages.turnStartMessage(players.get(pTurn), board));
-                    menu.getChildren().add(endTurn);
+                    buttons.getChildren().add(endTurn);
                 }
             } 
             else {
                 if (players.get(pTurn) instanceof Bot) {
                     mainMessages.setText(movement.rollResults(players.get(pTurn)));
-                    menu.getChildren().add(ok);
+                    buttons.getChildren().add(ok);
                     movePlayerOnBoard(players.get(pTurn));
                 }
                 else {
                     mainMessages.setText(messages.turnStartMessage(players.get(pTurn), board));
-                    menu.getChildren().add(rollButton);
+                    buttons.getChildren().add(rollButton);
                 }
             }
         });
 
         tryDoubles.setOnAction(e -> {
             mainMessages.setText(jail.rollForJail(players.get(pTurn)));
-            menu.getChildren().remove(jailButtons);
-            menu.getChildren().add(endTurn);
+            buttons.getChildren().remove(jailButtons);
+            buttons.getChildren().add(endTurn);
         });
         payBail.setOnAction(e -> {
             jail.payBail(players.get(pTurn));
             mainMessages.setText(jail.payBailMessage(players.get(pTurn)));
-            menu.getChildren().remove(jailButtons);
-            menu.getChildren().add(endTurn);
+            buttons.getChildren().remove(jailButtons);
+            buttons.getChildren().add(endTurn);
         });
  
         for (Player player : players) {
@@ -320,7 +315,8 @@ public class BoardGameImageGUI {
             playerInfo.getChildren().add(playerVbox);
         }
  
-        menu.getChildren().addAll(playerInfo, mainMessages, start);
+        menu.getChildren().addAll(playerInfo, mainMessages, buttons);
+        buttons.getChildren().add(start);
         mainBox.getChildren().addAll(pane, menu);
  
         loadPlayersToBoard();
@@ -352,7 +348,6 @@ public class BoardGameImageGUI {
             x = x + xOffset;
             y = y + yOffset;
         }
- 
         ImageView view = playerSprites.get(player);
  
         view.setTranslateX(x);
