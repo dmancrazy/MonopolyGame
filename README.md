@@ -6,6 +6,14 @@ https://github.com/AmkaTsendjargal/MonopolyGame
 # Download
 Download the practice folder within the repository (Including the Test classes) and into a directory (I suggest desktop). also make sure that this file has a copy of hamcrest-core-1.3.jar and junit-4.12.jar (which it does).
 
+# Test Files
+```
+SquareTest.java
+PlayerTest.java
+JailTest.java
+BankerTest.java
+```
+
 # Junit Testing
 After changing directories to practice using the command prompt; run the following commands in the practice.
 ```
@@ -16,20 +24,21 @@ java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore Player
 or
 java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore JailTest
 or 
-java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore Banker
-
+java -cp ;hamcrest-core-1.3.jar;junit-4.12.jar org.junit.runner.JUnitCore BankerTest.java
 ```
+
 # Running the Game
-There should be 3 folders in practice containing .java files called Actions, Configuration and GamePieces. Leave those folders as they are, you don't need to pull the files out. It is important that you do not place the Test classes together with these files because it won't compile if you are trying to run the game.
+There should be 3 folders in practice containing .java files called Actions, Configuration and GamePieces. Leave those folders as they are, you don't need to pull the files out. It is important that you REMOVE the 4 Test files from this folder because it won't compile if you are trying to run the game.
 
 # Text-Based Game
-After using the command prompt to change directories to the one containing all of the java filesand few images run the following commands in that directory.
+After using the command prompt to change directories to the practice and run the following commands in that directory.
 ```
 javac *.java
 java TextBasedGame
 ```
+
 # GUI Game
-After using the command prompt to change directories to the one containing all of the java filesand few images run the following commands in that directory.
+After using the command prompt to change directories to the practice and run the following commands in that directory.
 ```
 javac *.java
 java MonopolyApp
