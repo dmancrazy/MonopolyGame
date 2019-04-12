@@ -66,4 +66,5 @@ YouTube: https://youtu.be/7LxWQIDOzyE
 https://www.amazon.com/Hasbro-Monopoly-Replacement-Board/dp/B017MNUCXC:
 The source of our main background image. We do not in any way have ownership of this image and this project will not be used to make any money. The Monopoly board is liscened and owned by Hasbro and all credit for the invention of the game goes to them.
 
+Piskel Sprite Art and Editor: https://www.piskelapp.com/
 
