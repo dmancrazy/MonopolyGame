@@ -1,7 +1,7 @@
 # Monopoly Game
 This project was inspired by the hasbro game Monopoly.
 The project can be found in this repository.
-https://github.com/AmkaTsendjargal/MonopolyGame
+https://github.com/dmancrazy/MonopolyGame
 
 # Download
 Download the practice folder within the repository (Including the Test classes) and into a directory (I suggest desktop). also make sure that this file has a copy of hamcrest-core-1.3.jar and junit-4.12.jar (which it does).
